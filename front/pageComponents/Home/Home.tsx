@@ -1,4 +1,3 @@
-import React from "react"
 import Link from "next/link"
 import { useState, useMemo, useReducer } from "react"
 import { TimerObserver } from "./components/TimerObserver"

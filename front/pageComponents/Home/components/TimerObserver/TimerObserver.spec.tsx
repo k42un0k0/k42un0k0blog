@@ -1,4 +1,3 @@
-import React from "react"
 import { render } from "@testing-library/react";
 import TimerObserver from "./TimerObserver";
 import { Timer } from "../../store/Timer";
@@ -8,7 +7,6 @@ test("mobx test sample", () => {
   const { getByTestId } = render(<TimerObserver timer={timer} />)
 
 
-  console.log(timer)
   expect(getByTestId("num").innerHTML).toBe("0");
 
   timer.increaseTimer();
