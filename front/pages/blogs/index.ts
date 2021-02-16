@@ -1,3 +1,3 @@
-import { Blogs } from '../../pageComponents/Blogs'
+import { Blogs } from '../../modules/Blogs'
 
 export default Blogs 

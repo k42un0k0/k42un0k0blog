@@ -1,3 +1,3 @@
-import { BlogsEdit } from '../../pageComponents/Blogs/BlogsEdit'
+import { BlogsEdit } from '../../modules/Blogs/BlogsEdit'
 
 export default BlogsEdit 
