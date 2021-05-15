@@ -1,1 +1,1 @@
-export { default as BlogsEdit } from "./BlogsEdit";
+export { default as BlogsEdit } from './BlogsEdit';

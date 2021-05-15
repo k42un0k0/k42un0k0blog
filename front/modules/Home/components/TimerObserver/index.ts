@@ -1,1 +1,1 @@
-export { default as TimerObserver } from "./TimerObserver"
+export { default as TimerObserver } from './TimerObserver';

@@ -1,8 +1,12 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
 
-type Props = { Component: React.FC, pageProps: {} }
-function MyApp({ Component, pageProps }: Props) {
-  return <Component { ...pageProps } />
+type Props = {
+  Component: React.VFC;
+  pageProps: Record<string, unknown>;
+};
+
+function MyApp({ Component, pageProps }: Props): JSX.Element {
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;

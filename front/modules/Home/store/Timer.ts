@@ -1,13 +1,13 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable } from 'mobx';
 
 export class Timer {
-  secondsPassed = 0
+  secondsPassed = 0;
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
 
-  increaseTimer = () => {
-    this.secondsPassed += 1
-  }
+  increaseTimer = (): void => {
+    this.secondsPassed += 1;
+  };
 }
