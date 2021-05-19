@@ -1,0 +1,42 @@
+@startuml
+
+interface 投稿{
+    string title
+    string body
+    Array<Image> images
+    Type type
+    published_at
+    updated_at
+}
+
+class スライド implements 投稿{
+}
+
+class マークダウン implements 投稿{
+}
+
+class リッチテキスト implements 投稿{
+}
+
+class 投稿者{
+}
+
+class 親コメント{
+    Id blog_id
+    Id editor_id
+    string body
+}
+
+class 子コメント{
+    Id parent_comment_id
+    Id editor_id
+    string body
+}
+
+投稿者 o-- 投稿
+投稿者 o-- 親コメント
+投稿者 o-- 子コメント
+投稿 o-- 親コメント
+親コメント o-- 子コメント
+
+@enduml
