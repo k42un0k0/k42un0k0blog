@@ -3,6 +3,7 @@ package controller
 import (
 	"k42un0k0blog/pkg/model"
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -50,9 +51,9 @@ func (BlogsController BlogsController) BlogList(c *gin.Context) {
 	query := initBlogListQuery(c)
 	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page, 20)
 	if err != nil {
-		c.JSON(502, err)
+		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, blogs)
+		c.JSON(http.StatusOK, blogs)
 	}
 }
 
@@ -60,9 +61,9 @@ func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 	query := initBlogGetQuery(c)
 	b, err := BlogsController.blogRepository.FindById(uint(query.id))
 	if err != nil {
-		c.JSON(502, err)
+		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, b)
+		c.JSON(http.StatusOK, b)
 	}
 }
 
@@ -70,9 +71,9 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 	blog := model.Blog{}
 	b, err := BlogsController.blogRepository.Create(blog)
 	if err != nil {
-		c.JSON(502, err)
+		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, b)
+		c.JSON(http.StatusOK, b)
 	}
 }
 
@@ -85,8 +86,8 @@ func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
 	b, err := BlogsController.blogRepository.Update(blog)
 	log.Print(b, blog)
 	if err != nil {
-		c.JSON(502, err)
+		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, b)
+		c.JSON(http.StatusOK, b)
 	}
 }
