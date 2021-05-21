@@ -2,7 +2,7 @@ package infra
 
 import (
 	"k42un0k0blog/internal/controller"
-	repository_impl "k42un0k0blog/internal/infra/repository"
+	"k42un0k0blog/internal/infra/repository_impl"
 	"k42un0k0blog/pkg/repository"
 
 	"gorm.io/gorm"

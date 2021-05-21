@@ -31,9 +31,12 @@ func (blogRepository BlogRepositoryImpl)Update(m model.Blog) (model.Blog,error){
 func (blogRepository BlogRepositoryImpl)FindById(id uint) (model.Blog,error){
 
 	blog := dao.BlogDao{}
-	result := blogRepository.db.Find(&dao.BlogDao{},id)
 	
-	return blog.ToModel(), result.Error;
+	if err := blogRepository.db.Find(&blog,id).Error; err != nil {
+		return model.Blog{}, err
+	}
+
+	return blog.ToModel(),nil
 }
 
 func (blogRepository BlogRepositoryImpl)Delete(id uint) error{
@@ -43,7 +46,7 @@ func (blogRepository BlogRepositoryImpl)Delete(id uint) error{
 
 func (blogRepository BlogRepositoryImpl)FindAllByPage(page int,perpage int) ([]model.Blog,error){
 	daos := []dao.BlogDao{}
-	result := blogRepository.db.Find(&daos).Limit(perpage).Offset(page*perpage)
+	result := blogRepository.db.Limit(perpage).Offset(page*perpage).Find(&daos)
 	models := []model.Blog{}
 	for _,v := range daos {
 		models = append(models, v.ToModel())
