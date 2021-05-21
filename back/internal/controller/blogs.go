@@ -8,16 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type BlogsController struct{
-	blogRepository model.BlogRepository
-}
-
-func InitBlogsController(blogRepository model.BlogRepository) BlogsController{
-	h:= BlogsController{}
-	h.blogRepository = blogRepository
-	return h;
-}
-
 type BlogListQuery struct{
 	page int
 }
@@ -29,16 +19,6 @@ func initBlogListQuery(c *gin.Context)BlogListQuery{
 		query.page = page
 	}
 	return query
-}
-
-func (BlogsController BlogsController) BlogList(c *gin.Context){
-	query := initBlogListQuery(c)
-	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page,20)
-	if err != nil{
-		c.JSON(502,err)
-	}else{
-		c.JSON(200,blogs)
-	}
 }
 
 type BlogGetQuery struct{
@@ -53,6 +33,28 @@ func initBlogGetQuery(c *gin.Context)BlogGetQuery{
 	}
 	return query
 }
+
+type BlogsController struct{
+	blogRepository model.BlogRepository
+}
+
+func InitBlogsController(blogRepository model.BlogRepository) BlogsController{
+	h:= BlogsController{}
+	h.blogRepository = blogRepository
+	return h;
+}
+
+func (BlogsController BlogsController) BlogList(c *gin.Context){
+	query := initBlogListQuery(c)
+	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page,20)
+	if err != nil{
+		c.JSON(502,err)
+	}else{
+		c.JSON(200,blogs)
+	}
+}
+
+
 func (BlogsController BlogsController) BlogGet(c *gin.Context){
 	query := initBlogGetQuery(c)
 	b, err:=BlogsController.blogRepository.FindById(uint(query.id))
