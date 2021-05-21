@@ -1,12 +1,16 @@
 package model
 
-import (
-	"k42un0k0blog/pkg/model/blog"
+
+type BlogType int
+const (
+	Slide BlogType = iota
+	Markdown
+	Richtext
 )
 
 type Blog struct {
 	ID uint
 	Title string
 	Body string
-	BlogType blog.BlogType
+	BlogType BlogType
 }

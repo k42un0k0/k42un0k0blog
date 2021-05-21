@@ -1,7 +1,7 @@
 package repository_impl
 
 import (
-	"testing" // テストで使える関数・構造体が用意されているパッケージをimport
+	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"gorm.io/driver/postgres"
@@ -28,7 +28,7 @@ func getNewDbMock() (*gorm.DB, sqlmock.Sqlmock, error) {
 
 func TestExampleSuccess(t *testing.T) {
 	db,mock,_:= getNewDbMock()
-    mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows([]string{"id","title","body"}).AddRow(1 ,"unko","tinko"))
+    mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows([]string{"id","title","body"}).AddRow(1 ,"foo","bar"))
     repo := InitBlogRepository(db)
  	result,err:=repo.FindById(1)
     if err != nil {

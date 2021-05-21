@@ -1,7 +1,7 @@
 package infra
 
 import (
-	"k42un0k0blog/pkg/model"
+	"k42un0k0blog/internal/infra/dao"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -12,7 +12,7 @@ func InitDB() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&model.Blog{})
-	// db.Create(&model.Blog{Title: "unko"})
+	db.AutoMigrate(&dao.BlogDao{})
+	// db.Create(&model.Blog{Title: "test"})
 	return db
 }

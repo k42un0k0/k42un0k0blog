@@ -3,7 +3,6 @@ package repository_impl
 import (
 	"k42un0k0blog/internal/infra/dao"
 	"k42un0k0blog/pkg/model"
-	"k42un0k0blog/pkg/repository"
 
 	"gorm.io/gorm"
 )
@@ -15,24 +14,29 @@ type BlogRepositoryImpl struct{
 func (blogRepository BlogRepositoryImpl)Create(m model.Blog) (model.Blog,error){
 
 	d := dao.BlogDaoFromModel(m)
-	result := blogRepository.db.Create(&d)
+	if err := blogRepository.db.Create(&d).Error; err != nil {
+		return model.Blog{}, err
+	}
 	
-	return d.ToModel(), result.Error;
+	return d.ToModel(), nil;
 }
 
 func (blogRepository BlogRepositoryImpl)Update(m model.Blog) (model.Blog,error){
 
 	d := dao.BlogDaoFromModel(m)
-	result := blogRepository.db.Save(&d)
+
+	if err := blogRepository.db.Debug().Model(&d).Where("id = ?", m.ID).Updates(d).Error; err != nil {
+		return model.Blog{}, err
+	}
 	
-	return d.ToModel(), result.Error;
+	return d.ToModel(), nil;
 }
 
 func (blogRepository BlogRepositoryImpl)FindById(id uint) (model.Blog,error){
 
 	blog := dao.BlogDao{}
 	
-	if err := blogRepository.db.Find(&blog,id).Error; err != nil {
+	if err := blogRepository.db.First(&blog,id).Error; err != nil {
 		return model.Blog{}, err
 	}
 
@@ -46,15 +50,19 @@ func (blogRepository BlogRepositoryImpl)Delete(id uint) error{
 
 func (blogRepository BlogRepositoryImpl)FindAllByPage(page int,perpage int) ([]model.Blog,error){
 	daos := []dao.BlogDao{}
-	result := blogRepository.db.Limit(perpage).Offset(page*perpage).Find(&daos)
+
+	if err := blogRepository.db.Limit(perpage).Offset(page*perpage).Find(&daos).Error; err != nil {
+		return []model.Blog{}, err
+	}
+
 	models := []model.Blog{}
 	for _,v := range daos {
 		models = append(models, v.ToModel())
 	}
-	return models,  result.Error;
+	return models, nil;
 }
 
-func InitBlogRepository(db *gorm.DB) repository.BlogRepository{
+func InitBlogRepository(db *gorm.DB) model.BlogRepository{
 	r := BlogRepositoryImpl{}
 	r.db = db
 	return r

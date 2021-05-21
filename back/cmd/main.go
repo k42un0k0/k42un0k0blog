@@ -1,10 +1,8 @@
 package main
 
-import (
-	"k42un0k0blog/internal/infra"
-)
+import "k42un0k0blog/internal"
 
 
 func main() {
-	infra.RunServer()
+	internal.RunServer()
 }
