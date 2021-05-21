@@ -1,6 +1,11 @@
 # K42un0k0Blog
 
-このリポジトリはssoを実装したいがためのリポジトリです
+## やりたいこと
+
+- golang server
+- jamstack with next
+- react-query
+- rss
 
 ## .npmrc
 
