@@ -12,10 +12,11 @@ import (
 
 type Container struct {
 	*gorm.DB
-	model.UserRepository
 	model.BlogRepository
+	model.UserRepository
 	controller.HomeController
 	controller.BlogsController
+	controller.UsersController
 	service.AuthenticatorService
 }
 

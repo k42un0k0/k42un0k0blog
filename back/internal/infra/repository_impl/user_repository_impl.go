@@ -26,7 +26,7 @@ func (UserRepository UserRepositoryImpl) Update(m model.User) (model.User, error
 
 	d := dao.UserDaoFromModel(m)
 
-	if err := UserRepository.db.Debug().Model(&d).Updates(dao.UserDao{Name: m.Name, Email: m.Email}).Error; err != nil {
+	if err := UserRepository.db.Model(&d).Updates(dao.UserDao{Name: m.Name, Email: m.Email}).Error; err != nil {
 		return model.User{}, err
 	}
 
@@ -38,7 +38,7 @@ func (UserRepository UserRepositoryImpl) UpdatePassword(m model.User, password s
 	d := dao.UserDaoFromModel(m)
 	d.SetPassword(password)
 
-	if err := UserRepository.db.Debug().Model(&d).Update("password", d.Password).Error; err != nil {
+	if err := UserRepository.db.Model(&d).Update("password", d.Password).Error; err != nil {
 		return model.User{}, err
 	}
 
@@ -60,7 +60,7 @@ func (UserRepository UserRepositoryImpl) FindByEmail(email string) (model.User, 
 
 	User := dao.UserDao{}
 
-	if err := UserRepository.db.Debug().Where("email = ?", email).First(&User).Error; err != nil {
+	if err := UserRepository.db.Where("email = ?", email).First(&User).Error; err != nil {
 		return model.User{}, err
 	}
 

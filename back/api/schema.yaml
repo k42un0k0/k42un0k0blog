@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: login api sample
+  title: k42un0k0blog
   version: 1.0.0
 servers:
   - url: http://localhost:8080/v1
@@ -17,7 +17,7 @@ paths:
               $ref: "#/components/schemas/AuthRequest"
             example:
               username: "test@test.com"
-              password: "test1234"
+              password: "password"
       responses:
         "200":
           description: successfully authorized
