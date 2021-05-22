@@ -15,6 +15,12 @@ func (service AuthenticatorService) ValidateUser(username string, password strin
 		return nil, errors.New("User not exist")
 	}
 
+	pwdErr := CompareHashAndPassword(user.Password, password)
+
+	if pwdErr != nil {
+		return nil, errors.New("Incorrect Password")
+	}
+
 	return &user, nil
 }
 

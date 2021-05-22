@@ -1,8 +1,9 @@
 package model
 
 type UserRepository interface {
-	Create(User) (User, error)
+	Create(User, string) (User, error)
 	Update(User) (User, error)
+	UpdatePassword(User, string) (User, error)
 	Delete(id uint) error
 	FindById(id uint) (User, error)
 	FindByEmail(email string) (User, error)

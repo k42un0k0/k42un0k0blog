@@ -11,9 +11,10 @@ type UserRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func (UserRepository UserRepositoryImpl) Create(m model.User) (model.User, error) {
+func (UserRepository UserRepositoryImpl) Create(m model.User, password string) (model.User, error) {
 
 	d := dao.UserDaoFromModel(m)
+	d.SetPassword(password)
 	if err := UserRepository.db.Create(&d).Error; err != nil {
 		return model.User{}, err
 	}
@@ -25,7 +26,19 @@ func (UserRepository UserRepositoryImpl) Update(m model.User) (model.User, error
 
 	d := dao.UserDaoFromModel(m)
 
-	if err := UserRepository.db.Debug().Model(&d).Where("id = ?", m.ID).Updates(d).Error; err != nil {
+	if err := UserRepository.db.Debug().Model(&d).Updates(dao.UserDao{Name: m.Name, Email: m.Email}).Error; err != nil {
+		return model.User{}, err
+	}
+
+	return d.ToModel(), nil
+}
+
+func (UserRepository UserRepositoryImpl) UpdatePassword(m model.User, password string) (model.User, error) {
+
+	d := dao.UserDaoFromModel(m)
+	d.SetPassword(password)
+
+	if err := UserRepository.db.Debug().Model(&d).Update("password", d.Password).Error; err != nil {
 		return model.User{}, err
 	}
 
