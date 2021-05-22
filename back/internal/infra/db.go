@@ -13,7 +13,6 @@ func InitDB() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&dao.BlogDao{})
-	// db.Create(&model.Blog{Title: "test"})
+	db.AutoMigrate(&dao.BlogDao{}, &dao.UserDao{})
 	return db
 }

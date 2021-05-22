@@ -16,8 +16,8 @@ paths:
             schema:
               $ref: "#/components/schemas/AuthRequest"
             example:
-              username: "admin"
-              password: "admin"
+              username: "test@test.com"
+              password: "test1234"
       responses:
         "200":
           description: successfully authorized
@@ -38,6 +38,28 @@ paths:
                 type: array
                 items:
                   type: string
+  /blogs/create:
+    get:
+      description: Create Blog
+      operationId: blogCreate
+      responses:
+        "200":
+          description: successfully request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  ID:
+                    type: number
+                  Title:
+                    type: string
+                  Body:
+                    type: string
+                  BlogType:
+                    type: number
+        "401":
+          description: authorization error
 
 components:
   schemas:
