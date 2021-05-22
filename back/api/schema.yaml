@@ -1,0 +1,63 @@
+openapi: 3.0.2
+info:
+  title: login api sample
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+    description: development env
+paths:
+  /sign_in:
+    post:
+      description: Sign In
+      operationId: signIn
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+            example:
+              username: "admin"
+              password: "admin"
+      responses:
+        "200":
+          description: successfully authorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Auth"
+  /blogs:
+    get:
+      description: Blog List
+      operationId: blogList
+      responses:
+        "200":
+          description: successfully request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: string
+
+components:
+  schemas:
+    Auth:
+      type: object
+      description: authorized response
+      properties:
+        expire:
+          type: string
+          example: "2016-03-19T11:44:52+08:00"
+        token:
+          type: string
+          example: "abcdefgh12345678"
+    AuthRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
