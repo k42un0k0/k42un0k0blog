@@ -1,0 +1,15 @@
+type: object
+properties:
+  ID:
+    type: number
+  Title:
+    type: string
+  Body:
+    type: string
+  BlogType:
+    type: number
+required:
+  - ID
+  - Title
+  - Body
+  - BlogType

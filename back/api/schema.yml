@@ -3,7 +3,7 @@ info:
   title: k42un0k0blog
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/v1
+  - url: http://localhost:8080
     description: development env
 paths:
   /sign_in:
@@ -25,41 +25,14 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Auth"
+  /users:
+    $ref: ./paths/users.yml
+  /users/{id}:
+    $ref: ./paths/users_id.yml
+  /users/{id}/password:
+    $ref: ./paths/users_id_password.yml
   /blogs:
-    get:
-      description: Blog List
-      operationId: blogList
-      responses:
-        "200":
-          description: successfully request
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: array
-                items:
-                  type: string
-  /blogs/create:
-    get:
-      description: Create Blog
-      operationId: blogCreate
-      responses:
-        "200":
-          description: successfully request
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  ID:
-                    type: number
-                  Title:
-                    type: string
-                  Body:
-                    type: string
-                  BlogType:
-                    type: number
-        "401":
-          description: authorization error
+    $ref: ./paths/blogs.yml
 
 components:
   schemas:
@@ -83,3 +56,7 @@ components:
       required:
         - username
         - password
+    UserResponse:
+      $ref: ./components/user_response.yml
+    BlogResponse:
+      $ref: ./components/blog_response.yml

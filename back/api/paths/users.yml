@@ -1,0 +1,51 @@
+get:
+  description: ユーザー一覧の取得
+  operationId: userList
+  parameters:
+    - in: query
+      name: page
+      schema:
+        type: integer
+      description: 0 から始まるページ番号を指定する
+  responses:
+    "200":
+      description: successfully request
+      content:
+        application/json; charset=utf-8:
+          schema:
+            type: array
+            items:
+              $ref: "../components/user_response.yml"
+    "401":
+      description: authorization error
+post:
+  description: ユーザーの作成
+  operationId: userCreate
+  requestBody:
+    content:
+      application/json; charset=utf-8:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+            password_confirmation:
+              type: string
+          required:
+            - name
+            - email
+            - password
+            - password_confirmation
+  responses:
+    "200":
+      description: successfully request
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: "../components/user_response.yml"
+    "401":
+      description: authorization error
