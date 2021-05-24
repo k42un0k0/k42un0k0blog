@@ -27,6 +27,7 @@ func InitContainer() Container {
 	c.UserRepository = repository_impl.InitUserRepository(c.DB)
 	c.HomeController = controller.InitHomeController(c.BlogRepository)
 	c.BlogsController = controller.InitBlogsController(c.BlogRepository)
+	c.UsersController = controller.InitUsersController(c.UserRepository)
 	c.AuthenticatorService = service.InitAuthenticatorService(c.UserRepository)
 	return c
 }

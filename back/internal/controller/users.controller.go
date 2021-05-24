@@ -60,9 +60,9 @@ func InitUsersController(userRepository model.UserRepository) UsersController {
 	return h
 }
 
-func (UsersController UsersController) UserList(c *gin.Context) {
+func (usersController UsersController) UserList(c *gin.Context) {
 	query := initUserListQuery(c)
-	users, err := UsersController.userRepository.FindAllByPage(query.page, 20)
+	users, err := usersController.userRepository.FindAllByPage(query.page, 20)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
