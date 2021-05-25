@@ -24,7 +24,7 @@ func initBlogListQuery(c *gin.Context) BlogListQuery {
 }
 
 type BlogGetQuery struct {
-	id int
+	id uint
 }
 
 func initBlogGetQuery(c *gin.Context) BlogGetQuery {
@@ -32,7 +32,31 @@ func initBlogGetQuery(c *gin.Context) BlogGetQuery {
 	id, iderr := strconv.Atoi(c.Param("id"))
 	query.id = 0
 	if iderr == nil {
-		query.id = id
+		query.id = uint(id)
+	}
+	return query
+}
+
+type BlogCreateJson struct {
+	title     string
+	body      string
+	blog_type model.BlogType
+}
+
+type BlogUpdateJson struct {
+	title *string
+	body  *string
+}
+type BlogUpdateQuery struct {
+	id uint
+}
+
+func initBlogUpdateQuery(c *gin.Context) BlogUpdateQuery {
+	query := BlogUpdateQuery{}
+	id, iderr := strconv.Atoi(c.Param("id"))
+	query.id = 0
+	if iderr == nil {
+		query.id = uint(id)
 	}
 	return query
 }
@@ -59,7 +83,7 @@ func (BlogsController BlogsController) BlogList(c *gin.Context) {
 
 func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 	query := initBlogGetQuery(c)
-	b, err := BlogsController.blogRepository.FindById(uint(query.id))
+	b, err := BlogsController.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -68,7 +92,15 @@ func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 }
 
 func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
-	blog := model.Blog{}
+	var json BlogCreateJson
+	if e := c.BindJSON(&json); e != nil {
+		return
+	}
+	blog := model.Blog{
+		Title:    json.title,
+		Body:     json.body,
+		BlogType: json.blog_type,
+	}
 	b, err := BlogsController.blogRepository.Create(blog)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
@@ -78,11 +110,21 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 }
 
 func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
-	blog, err := BlogsController.blogRepository.FindById(1)
+	query := initBlogUpdateQuery(c)
+	blog, err := BlogsController.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(404, nil)
 	}
-	blog.Title += "test"
+	var json BlogUpdateJson
+	if e := c.BindJSON(&json); e != nil {
+		return
+	}
+	if json.title != nil {
+		blog.Title = *json.title
+	}
+	if json.body != nil {
+		blog.Body = *json.body
+	}
 	b, err := BlogsController.blogRepository.Update(blog)
 	log.Print(b, blog)
 	if err != nil {

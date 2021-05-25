@@ -90,11 +90,11 @@ func configAuth(r *gin.Engine, container Container) gin.IRoutes {
 
 	// auth用ルーティングの設定
 	r.POST("/sign_in", authMiddleware.LoginHandler)
-	r.POST("/sign_out", authMiddleware.LogoutHandler)
 	auth := r.Group("/auth")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	// Refresh time can be longer than token timeout
 	auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+	auth.POST("/sign_out", authMiddleware.LogoutHandler)
 
 	return r.Group("/").Use(authMiddleware.MiddlewareFunc())
 }
