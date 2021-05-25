@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@aspida/axios": "1.7.0",
+    "@aspida/react-query": "1.7.0",
     "axios": "0.21.1",
     "mobx": "^6.1.5",
     "mobx-keystone": "^0.48.5",

@@ -86,6 +86,13 @@
   dependencies:
     aspida "^1.7.0"
 
+"@aspida/react-query@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@aspida/react-query/-/react-query-1.7.0.tgz#966b520528a6fcb37db970b5455a2a27fb972483"
+  integrity sha512-IQ1qZW9dTQt1MikcSGWYipnCr8gwCykaOhI5eTTEy9Ux26ML2FLimEh+d7jf1IcZRVeH1ZCwNKlIwIR9VZ4brg==
+  dependencies:
+    aspida "^1.7.0"
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
