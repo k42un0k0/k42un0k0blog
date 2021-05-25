@@ -36,8 +36,20 @@ func initUserGetQuery(c *gin.Context) UserGetQuery {
 	return query
 }
 
+type UserCreateJson struct {
+	name                  string
+	email                 string
+	password              string
+	password_confirmation string
+}
+
 type UserUpdateQuery struct {
 	id int
+}
+
+type UserUpdateJson struct {
+	name  *string
+	email *string
 }
 
 func initUserUpdateQuery(c *gin.Context) UserUpdateQuery {
@@ -48,6 +60,11 @@ func initUserUpdateQuery(c *gin.Context) UserUpdateQuery {
 		query.id = id
 	}
 	return query
+}
+
+type UserUpdatePasswordJson struct {
+	password              string
+	password_confirmation string
 }
 
 type UsersController struct {
@@ -81,8 +98,19 @@ func (UsersController UsersController) UserGet(c *gin.Context) {
 }
 
 func (usersController UsersController) UserCreate(c *gin.Context) {
-	user := model.User{}
-	u, err := usersController.userRepository.Create(user, "password")
+	var json UserCreateJson
+	if err := c.BindJSON(&json); err != nil {
+		return
+	}
+	user := model.User{
+		Name:  json.name,
+		Email: json.email,
+	}
+	if json.password != json.password_confirmation || json.password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "invalid password"})
+		return
+	}
+	u, err := usersController.userRepository.Create(user, json.password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -90,23 +118,45 @@ func (usersController UsersController) UserCreate(c *gin.Context) {
 	}
 }
 
-type JsonRequest struct {
-	name  string `json:"name"`
-	email string `json:"email"`
-}
-
 func (UsersController UsersController) UserUpdate(c *gin.Context) {
-	query := initUserGetQuery(c)
+	query := initUserUpdateQuery(c)
 	user, err := UsersController.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(404, nil)
 	}
-	var json JsonRequest
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var json UserUpdateJson
+	if err := c.BindJSON(&json); err != nil {
 		return
 	}
+	if json.name != nil {
+		user.Name = *json.name
+	}
+	if json.email != nil {
+		user.Email = *json.email
+	}
 	u, err := UsersController.userRepository.Update(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+	} else {
+		c.JSON(http.StatusOK, u)
+	}
+}
+
+func (UsersController UsersController) UserUpdatePassword(c *gin.Context) {
+	query := initUserUpdateQuery(c)
+	user, err := UsersController.userRepository.FindById(uint(query.id))
+	if err != nil {
+		c.JSON(404, nil)
+	}
+	var json UserUpdatePasswordJson
+	if err := c.BindJSON(&json); err != nil {
+		return
+	}
+	if json.password != json.password_confirmation || json.password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "invalid password"})
+		return
+	}
+	u, err := UsersController.userRepository.UpdatePassword(user, json.password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
