@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "format": "eslint . --fix && prettier --write .",
-    "generate:aspida":"openapi2aspida -i ../back/api/openapi.yml"
+    "generate:aspida": "openapi2aspida -i ../back/api/openapi.yml"
   },
   "dependencies": {
     "@aspida/axios": "1.7.0",
