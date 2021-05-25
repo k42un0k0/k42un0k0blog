@@ -8,9 +8,12 @@
     "start": "next start",
     "test": "jest",
     "lint": "eslint .",
-    "format": "eslint . --fix && prettier --write ."
+    "format": "eslint . --fix && prettier --write .",
+    "generate:aspida":"openapi2aspida -i ../back/api/openapi.yml"
   },
   "dependencies": {
+    "@aspida/axios": "1.7.0",
+    "axios": "0.21.1",
     "mobx": "^6.1.5",
     "mobx-keystone": "^0.48.5",
     "mobx-react-lite": "^3.2.0",
@@ -32,6 +35,7 @@
     "eslint-import-resolver-typescript": "2.4.0",
     "eslint-plugin-import": "2.23.1",
     "jest": "^26.6.3",
+    "openapi2aspida": "0.16.4",
     "prettier": "2.3.0",
     "ts-jest": "^26.5.0",
     "ts-node": "^9.1.1",
