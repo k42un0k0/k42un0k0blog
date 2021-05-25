@@ -1,3 +1,3 @@
-import { BlogsEdit } from '../../modules/Blogs/BlogsEdit';
+import { BlogsEdit } from '../../internal/Blogs/BlogsEdit';
 
 export default BlogsEdit;
