@@ -1,7 +1,9 @@
 package test
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -11,6 +13,13 @@ import (
 	"github.com/getkin/kin-openapi/openapi3filter"
 	legacyrouter "github.com/getkin/kin-openapi/routers/legacy"
 )
+
+type JSON map[string]interface{}
+
+func JsonToBody(j JSON) io.Reader {
+	b, _ := json.Marshal(j)
+	return bytes.NewReader(b)
+}
 
 func DoAndGetBody(request *http.Request) (*http.Response, []byte, error) {
 	// responseの取得とresponse.Bodyの取得
@@ -68,4 +77,28 @@ func ValidateResponseInput(requestValidationInput *openapi3filter.RequestValidat
 	}
 	responseValidationInput.SetBodyBytes(body)
 	return openapi3filter.ValidateResponse(ctx, responseValidationInput)
+}
+
+func SetAuthToken(request *http.Request, u *url.URL) error {
+	signInReq, e := NewRequest(u, http.MethodPost, "/sign_in", JsonToBody(JSON{"username": "test@test.com", "password": "password"}))
+	if e != nil {
+		return e
+	}
+	signInReq.Header.Set("Content-Type", "application/json; charset=utf-8")
+	if e != nil {
+		return e
+	}
+	_, body, e := DoAndGetBody(signInReq)
+	if e != nil {
+		return e
+	}
+
+	var j struct {
+		Token string `json:"token"`
+	}
+	if e := json.Unmarshal(body, &j); e != nil {
+		return e
+	}
+	request.Header.Set("Authorization", "Bearer "+j.Token)
+	return nil
 }

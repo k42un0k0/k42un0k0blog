@@ -1,4 +1,4 @@
-package main_test
+package controller_test
 
 import (
 	"k42un0k0blog/internal"
@@ -17,7 +17,7 @@ func TestSignIn(t *testing.T) {
 	defer ts.Close()
 	u, _ := url.Parse(ts.URL)
 
-	request, e := test.NewRequest(u, http.MethodPost, "/sign_in", test.JsonToBody(test.JSON{"username": "test@test.com", "password": "password"}))
+	request, e := test.NewRequest(u, http.MethodPost, "/sign_in", jsonToBody(JSON{"username": "test@test.com", "password": "password"}))
 	if e != nil {
 		t.Fatal(e)
 	}

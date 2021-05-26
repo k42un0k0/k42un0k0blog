@@ -22,44 +22,15 @@ func initUserListQuery(c *gin.Context) UserListQuery {
 	return query
 }
 
-type UserGetQuery struct {
-	id int
-}
-
-func initUserGetQuery(c *gin.Context) UserGetQuery {
-	query := UserGetQuery{}
-	id, iderr := strconv.Atoi(c.Param("id"))
-	query.id = 0
-	if iderr == nil {
-		query.id = id
-	}
-	return query
-}
-
 type UserCreateJson struct {
 	name                  string
 	email                 string
 	password              string
 	password_confirmation string
 }
-
-type UserUpdateQuery struct {
-	id int
-}
-
 type UserUpdateJson struct {
 	name  *string
 	email *string
-}
-
-func initUserUpdateQuery(c *gin.Context) UserUpdateQuery {
-	query := UserUpdateQuery{}
-	id, iderr := strconv.Atoi(c.Param("id"))
-	query.id = 0
-	if iderr == nil {
-		query.id = id
-	}
-	return query
 }
 
 type UserUpdatePasswordJson struct {
@@ -88,7 +59,7 @@ func (usersController UsersController) UserList(c *gin.Context) {
 }
 
 func (UsersController UsersController) UserGet(c *gin.Context) {
-	query := initUserGetQuery(c)
+	query := initWithId(c)
 	u, err := UsersController.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
@@ -119,7 +90,7 @@ func (usersController UsersController) UserCreate(c *gin.Context) {
 }
 
 func (UsersController UsersController) UserUpdate(c *gin.Context) {
-	query := initUserUpdateQuery(c)
+	query := initWithId(c)
 	user, err := UsersController.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(404, nil)
@@ -143,7 +114,7 @@ func (UsersController UsersController) UserUpdate(c *gin.Context) {
 }
 
 func (UsersController UsersController) UserUpdatePassword(c *gin.Context) {
-	query := initUserUpdateQuery(c)
+	query := initWithId(c)
 	user, err := UsersController.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(404, nil)

@@ -173,12 +173,12 @@ paths:
                   type: string
                 body:
                   type: string
-                blogType:
+                blog_type:
                   type: number
               required:
                 - title
                 - body
-                - blogType
+                - blog_type
       responses:
         "200":
           description: successfully request
@@ -188,7 +188,52 @@ paths:
                 $ref: "#/components/schemas/BlogResponse"
         "401":
           description: authorization error
-
+  /blogs/{id}:
+    get:
+      description: ユーザーの取得
+      operationId: userGet
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: successfully request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/BlogResponse"
+    put:
+      description: ユーザーの更新
+      operationId: userUpdate
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+      responses:
+        "200":
+          description: successfully request
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/BlogResponse"
+        "401":
+          description: authorization error
+  
 components:
   schemas:
     Auth:
@@ -234,16 +279,16 @@ components:
     BlogResponse:
       type: object
       properties:
-        ID:
+        id:
           type: number
-        Title:
+        title:
           type: string
-        Body:
+        body:
           type: string
-        BlogType:
+        blog_type:
           type: number
       required:
-        - ID
-        - Title
-        - Body
-        - BlogType
+        - id
+        - title
+        - body
+        - blog_type

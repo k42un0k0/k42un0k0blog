@@ -6,7 +6,7 @@ import (
 
 func ConfigServer() *gin.Engine {
 	c := InitContainer()
-	r := gin.Default()
+	r := gin.New()
 	auth := configAuth(r, c)
 	configRouting(r, auth, c)
 	return r

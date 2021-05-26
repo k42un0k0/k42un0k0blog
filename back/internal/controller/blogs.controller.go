@@ -4,62 +4,9 @@ import (
 	"k42un0k0blog/pkg/model"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
-type BlogListQuery struct {
-	page int
-}
-
-func initBlogListQuery(c *gin.Context) BlogListQuery {
-	query := BlogListQuery{}
-	page, pageErr := strconv.Atoi(c.Query("page"))
-	query.page = 0
-	if pageErr == nil {
-		query.page = page
-	}
-	return query
-}
-
-type BlogGetQuery struct {
-	id uint
-}
-
-func initBlogGetQuery(c *gin.Context) BlogGetQuery {
-	query := BlogGetQuery{}
-	id, iderr := strconv.Atoi(c.Param("id"))
-	query.id = 0
-	if iderr == nil {
-		query.id = uint(id)
-	}
-	return query
-}
-
-type BlogCreateJson struct {
-	title     string
-	body      string
-	blog_type model.BlogType
-}
-
-type BlogUpdateJson struct {
-	title *string
-	body  *string
-}
-type BlogUpdateQuery struct {
-	id uint
-}
-
-func initBlogUpdateQuery(c *gin.Context) BlogUpdateQuery {
-	query := BlogUpdateQuery{}
-	id, iderr := strconv.Atoi(c.Param("id"))
-	query.id = 0
-	if iderr == nil {
-		query.id = uint(id)
-	}
-	return query
-}
 
 type BlogsController struct {
 	blogRepository model.BlogRepository
@@ -72,7 +19,7 @@ func InitBlogsController(blogRepository model.BlogRepository) BlogsController {
 }
 
 func (BlogsController BlogsController) BlogList(c *gin.Context) {
-	query := initBlogListQuery(c)
+	query := initWithPage(c)
 	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page, 20)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
@@ -82,7 +29,7 @@ func (BlogsController BlogsController) BlogList(c *gin.Context) {
 }
 
 func (BlogsController BlogsController) BlogGet(c *gin.Context) {
-	query := initBlogGetQuery(c)
+	query := initWithId(c)
 	b, err := BlogsController.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
@@ -92,7 +39,7 @@ func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 }
 
 func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
-	var json BlogCreateJson
+	var json blogCreateJson
 	if e := c.BindJSON(&json); e != nil {
 		return
 	}
@@ -105,17 +52,17 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(http.StatusOK, b)
+		c.JSON(http.StatusOK, blogToResponse(b))
 	}
 }
 
 func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
-	query := initBlogUpdateQuery(c)
+	query := initWithId(c)
 	blog, err := BlogsController.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(404, nil)
 	}
-	var json BlogUpdateJson
+	var json blogUpdateJson
 	if e := c.BindJSON(&json); e != nil {
 		return
 	}
@@ -130,6 +77,6 @@ func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(http.StatusOK, b)
+		c.JSON(http.StatusOK, blogToResponse(b))
 	}
 }
