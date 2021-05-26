@@ -30,10 +30,7 @@
         "accessibility": "no-public"
       }
     ],
-    "@typescript-eslint/naming-convention": [
-      2,
-      { "format": ["strictCamelCase", "StrictPascalCase"], "selector": "default" }
-    ],
+    "@typescript-eslint/naming-convention": [2, { "format": ["camelCase", "PascalCase"], "selector": "default" }],
     "@typescript-eslint/consistent-type-definitions": [2, "type"],
     "import/order": [
       2,

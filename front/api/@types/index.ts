@@ -1,6 +1,7 @@
 /* eslint-disable */
 /** authorized response */
 export type Auth = {
+  code: number;
   expire: string;
   token: string;
 };
@@ -17,8 +18,8 @@ export type UserResponse = {
 };
 
 export type BlogResponse = {
-  ID: number;
-  Title: string;
-  Body: string;
-  BlogType: number;
+  id: number;
+  title: string;
+  body: string;
+  blog_type: number;
 };

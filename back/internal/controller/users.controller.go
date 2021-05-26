@@ -3,40 +3,9 @@ package controller
 import (
 	"k42un0k0blog/pkg/model"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
-type UserListQuery struct {
-	page int
-}
-
-func initUserListQuery(c *gin.Context) UserListQuery {
-	query := UserListQuery{}
-	page, pageErr := strconv.Atoi(c.Query("page"))
-	query.page = 0
-	if pageErr == nil {
-		query.page = page
-	}
-	return query
-}
-
-type UserCreateJson struct {
-	name                  string
-	email                 string
-	password              string
-	password_confirmation string
-}
-type UserUpdateJson struct {
-	name  *string
-	email *string
-}
-
-type UserUpdatePasswordJson struct {
-	password              string
-	password_confirmation string
-}
 
 type UsersController struct {
 	userRepository model.UserRepository
@@ -49,7 +18,7 @@ func InitUsersController(userRepository model.UserRepository) UsersController {
 }
 
 func (usersController UsersController) UserList(c *gin.Context) {
-	query := initUserListQuery(c)
+	query := initWithPage(c)
 	users, err := usersController.userRepository.FindAllByPage(query.page, 20)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)

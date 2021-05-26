@@ -1,16 +1,16 @@
 /* eslint-disable */
-import type * as Types from '../@types';
+import type * as Types from '../../@types';
 
 export type Methods = {
-  /** ブログ一覧の取得 */
+  /** ユーザーの取得 */
   get: {
     status: 200;
     /** successfully request */
-    resBody: Types.BlogResponse[];
+    resBody: Types.BlogResponse;
   };
 
-  /** ブログの作成 */
-  post: {
+  /** ユーザーの更新 */
+  put: {
     status: 200;
     /** successfully request */
     resBody: Types.BlogResponse;
@@ -18,7 +18,6 @@ export type Methods = {
     reqBody: {
       title: string;
       body: string;
-      blog_type: number;
     };
   };
 };

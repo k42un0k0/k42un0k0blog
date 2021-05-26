@@ -22,6 +22,19 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Auth"
+  /auth/refresh_token:
+    get:
+      description: Refresh Token
+      operationId: refresh token
+      responses:
+        "200":
+          description: successfully authorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Auth"
+        "401":
+          description: authorization error
   /users:
     get:
       description: ユーザー一覧の取得
