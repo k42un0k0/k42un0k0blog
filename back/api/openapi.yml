@@ -195,12 +195,19 @@ components:
       type: object
       description: authorized response
       properties:
+        code:
+          type: number
+          example: 200
         expire:
           type: string
           example: "2016-03-19T11:44:52+08:00"
         token:
           type: string
           example: "abcdefgh12345678"
+      required:
+        - code
+        - expire
+        - token
     AuthRequest:
       type: object
       properties:
