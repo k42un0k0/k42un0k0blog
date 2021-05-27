@@ -21,10 +21,14 @@ func InitBlogsController(blogRepository model.BlogRepository) BlogsController {
 func (BlogsController BlogsController) BlogList(c *gin.Context) {
 	query := initWithPage(c)
 	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page, 20)
+	var res []blogResponse
+	for _, item := range blogs {
+		res = append(res, blogToResponse(item))
+	}
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(http.StatusOK, blogs)
+		c.JSON(http.StatusOK, res)
 	}
 }
 

@@ -35,6 +35,24 @@ paths:
                 $ref: "#/components/schemas/Auth"
         "401":
           description: authorization error
+  /auth/sign_out:
+    post:
+      description: Sign Out
+      operationId: Sign Out
+      responses:
+        "200":
+          description: successfully authorized
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  code: 
+                    type: number
+                    example: 200
+
+        "401":
+          description: authorization error
   /users:
     get:
       description: ユーザー一覧の取得

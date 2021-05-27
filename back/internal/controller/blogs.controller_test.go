@@ -1,9 +1,6 @@
 package controller_test
 
 import (
-	"bytes"
-	"encoding/json"
-	"io"
 	"k42un0k0blog/internal"
 	"k42un0k0blog/internal/test"
 	"net/http"
@@ -14,19 +11,36 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type JSON map[string]interface{}
+func TestBlogList(t *testing.T) {
+	ts := httptest.NewServer(internal.ConfigServer())
+	defer ts.Close()
+	u, _ := url.Parse(ts.URL)
 
-func jsonToBody(j JSON) io.Reader {
-	b, _ := json.Marshal(j)
-	return bytes.NewReader(b)
+	request, e := test.NewRequest(u, http.MethodGet, "/blogs", nil)
+	if e != nil {
+		t.Fatal(e)
+	}
+
+	requestInput, e := test.ValidateRequestInput(request, u.Scheme, u.Host)
+	if e != nil {
+		t.Fatal(e)
+	}
+	response, body, e := test.DoAndGetBody(request)
+	if e != nil {
+		t.Fatal(e)
+	}
+	assert.Equal(t, 200, response.StatusCode)
+	e = test.ValidateResponseInput(requestInput, response, body)
+	if e != nil {
+		t.Fatal(e)
+	}
 }
-
 func TestBlogCreate(t *testing.T) {
 	ts := httptest.NewServer(internal.ConfigServer())
 	defer ts.Close()
 	u, _ := url.Parse(ts.URL)
 
-	request, e := test.NewRequest(u, http.MethodPost, "/blogs", jsonToBody(JSON{"title": "test title", "body": "test body", "blog_type": 0}))
+	request, e := test.NewRequest(u, http.MethodPost, "/blogs", test.JsonToBody(test.JSON{"title": "test title", "body": "test body", "blog_type": 0}))
 	if e != nil {
 		t.Fatal(e)
 	}
@@ -43,7 +57,7 @@ func TestBlogCreate(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	assert.Equal(t, `{"id":40,"title":"","body":"","blog_type":0}`, string(body))
+	assert.Equal(t, `{"id":47,"title":"","body":"","blog_type":0}`, string(body))
 	assert.Equal(t, 200, response.StatusCode)
 	e = test.ValidateResponseInput(requestInput, response, body)
 	if e != nil {
