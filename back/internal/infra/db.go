@@ -1,8 +1,6 @@
 package infra
 
 import (
-	"k42un0k0blog/internal/infra/dao"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -13,6 +11,5 @@ func InitDB() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&dao.BlogDao{}, &dao.UserDao{})
 	return db
 }
