@@ -13,6 +13,9 @@ export const pagesPath = {
     }
   },
   blogs: {
+    create: {
+      $url: (url?: { hash?: string }) => ({ pathname: '/blogs/create' as const, hash: url?.hash })
+    },
     edit: {
       $url: (url?: { hash?: string }) => ({ pathname: '/blogs/edit' as const, hash: url?.hash })
     },
