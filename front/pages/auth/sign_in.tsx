@@ -1,3 +1,3 @@
-export function SignIn(): JSX.Element {
-  return <div>sign in</div>;
-}
+import { SignIn } from '../../internal/auth/sign_in';
+
+export default SignIn;

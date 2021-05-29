@@ -4,7 +4,7 @@ interface 投稿{
     string title
     string body
     Array<Image> images
-    Type type
+    BlogType type
     published_at
     updated_at
 }
@@ -19,6 +19,9 @@ class リッチテキスト implements 投稿{
 }
 
 class 投稿者{
+    string name
+    string email
+    string password
 }
 
 class 親コメント{

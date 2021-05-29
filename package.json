@@ -9,7 +9,6 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@k42un0k0/puml-to-image": "0.1.0",
     "husky": "6.0.0",

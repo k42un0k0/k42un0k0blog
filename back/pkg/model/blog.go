@@ -1,7 +1,7 @@
 package model
 
-
 type BlogType int
+
 const (
 	Slide BlogType = iota
 	Markdown
@@ -9,8 +9,8 @@ const (
 )
 
 type Blog struct {
-	ID uint
-	Title string
-	Body string
+	ID       uint
+	Title    string
+	Body     string
 	BlogType BlogType
 }

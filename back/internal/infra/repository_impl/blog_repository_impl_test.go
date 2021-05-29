@@ -1,36 +1,17 @@
-package repository_impl
+package repository_impl_test
 
 import (
+	"k42un0k0blog/internal/infra/repository_impl"
+	"k42un0k0blog/internal/test"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
-func getNewDbMock() (*gorm.DB, sqlmock.Sqlmock, error) {
-	db, mock, err := sqlmock.New()
-	if err != nil {
-		return nil, mock, err
-	}
-
-	gormDB, err := gorm.Open(
-		mysql.New(
-			mysql.Config{
-				Conn: db,
-			}), &gorm.Config{})
-
-	if err != nil {
-		return gormDB, mock, err
-	}
-
-	return gormDB, mock, err
-}
-
 func TestExampleSuccess(t *testing.T) {
-	db, mock, _ := getNewDbMock()
+	db, mock, _ := test.GetNewDbMock()
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows([]string{"id", "title", "body"}).AddRow(1, "foo", "bar"))
-	repo := InitBlogRepository(db)
+	repo := repository_impl.InitBlogRepository(db)
 	result, err := repo.FindById(1)
 	if err != nil {
 		t.Fatalf("failed test %#v", err)

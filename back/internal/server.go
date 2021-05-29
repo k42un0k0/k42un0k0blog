@@ -1,13 +1,24 @@
 package internal
 
 import (
+	"time"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-
-func RunServer(){
+func ConfigServer() *gin.Engine {
 	c := InitContainer()
-	r := gin.Default()
-	defineRouting(r,c)
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+	auth := configAuth(r, c)
+	configRouting(r, auth, c)
+	return r
 }

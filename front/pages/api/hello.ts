@@ -1,4 +1,4 @@
-import { HttpStatus } from './../../modules/api/status';
+import { HttpStatus } from '../../lib/httpStatus';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
