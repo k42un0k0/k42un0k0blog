@@ -1,7 +1,7 @@
 import React from 'react';
 import './button.css';
 
-export interface ButtonProps {
+export type ButtonProps = {
   /**
    * Is this the principal call to action on the page?
    */
@@ -13,7 +13,7 @@ export interface ButtonProps {
   /**
    * How large should the button be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'large' | 'medium' | 'small';
   /**
    * Button contents
    */
@@ -22,7 +22,7 @@ export interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void;
-}
+};
 
 /**
  * Primary UI component for user interaction

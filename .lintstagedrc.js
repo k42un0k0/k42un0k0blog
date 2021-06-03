@@ -1,3 +1,3 @@
 module.exports = {
-  "front/**/*.ts": "yarn --cwd front format",
+  "front/**/*.(ts|tsx)": "yarn --cwd front format",
 };
