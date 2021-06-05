@@ -1,8 +1,16 @@
 /** @jsxImportSource theme-ui */
 import { useSnackbar } from 'notistack';
 import { useApiClientContext } from '../../../lib/apiClient';
+import { useMockApi } from '../hooks/useMockApi';
+import { flex, sticky } from '../styles/utils';
 
 export default function Header(): JSX.Element {
+  const query = useMockApi([
+    {
+      title: 'React',
+      link: '/tags/1',
+    },
+  ]);
   const snackbar = useSnackbar();
   const { apiClient, removeAuthToken } = useApiClientContext();
   const onClickLogout = async (): Promise<void> => {
@@ -13,11 +21,14 @@ export default function Header(): JSX.Element {
   return (
     <header
       sx={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1,
+        ...sticky.top,
+        ...flex.verticalCenter,
       }}
     >
+      <div>Home</div>
+      {query.data?.map((item) => {
+        return <div key={item.link}>{item.title}</div>;
+      })}
       <button onClick={onClickLogout}>ログアウト</button>
     </header>
   );

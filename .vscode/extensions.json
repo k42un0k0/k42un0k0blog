@@ -5,6 +5,7 @@
     "jebbs.plantuml",
     "golang.go",
     "42crunch.vscode-openapi",
-    "mtxr.sqltools"
+    "mtxr.sqltools",
+    "stevencl.adddoccomments"
   ]
 }
