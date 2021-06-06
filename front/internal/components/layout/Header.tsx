@@ -38,8 +38,8 @@ export default function Header(): JSX.Element {
     );
     return (): void => {
       f.pipe(
-        parentOpt,
-        O.bindTo('parent'),
+        O.Do,
+        O.bind('parent', () => parentOpt),
         O.bind('paddingTop', () => paddingTopOpt),
         O.map(({ parent, paddingTop }) => {
           parent.style.paddingTop = paddingTop;
