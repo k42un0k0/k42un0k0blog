@@ -31,7 +31,7 @@
       }
     ],
     "@typescript-eslint/naming-convention": 0,
-    "@typescript-eslint/consistent-type-definitions": [2, "type"],
+    "@typescript-eslint/consistent-type-definitions": 0,
     "import/order": [
       2,
       {
