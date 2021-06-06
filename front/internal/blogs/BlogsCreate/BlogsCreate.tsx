@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { pagesPath } from '../../../lib/$path';
 import { useApiClient } from '../../../lib/apiClient';
-import { Header } from '../../components/header';
 
 export default function BlogsCreate(): JSX.Element {
   const router = useRouter();
@@ -22,7 +21,6 @@ export default function BlogsCreate(): JSX.Element {
   );
   return (
     <div>
-      <Header />
       <h1>blogs page</h1>
       <button
         onClick={(): void => {

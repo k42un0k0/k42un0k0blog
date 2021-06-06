@@ -3,6 +3,7 @@ import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { ThemeProvider } from 'theme-ui';
+import { Layout } from '../internal/components/layout';
 import { ApiClientProvider, useApiClientValue } from '../lib/apiClient';
 type Props = {
   Component: React.VFC;
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: Props): JSX.Element {
       <SnackbarProvider maxSnack={3}>
         <ApiClientProvider value={apiClientValue}>
           <QueryClientProvider client={queryClient}>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </QueryClientProvider>
         </ApiClientProvider>
       </SnackbarProvider>

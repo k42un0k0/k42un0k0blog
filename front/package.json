@@ -19,6 +19,7 @@
     "@material-ui/core": "4.11.4",
     "axios": "0.21.1",
     "date-fns": "2.21.3",
+    "fp-ts": "^2.10.5",
     "mobx": "^6.1.5",
     "mobx-keystone": "^0.48.5",
     "mobx-react-lite": "^3.2.0",

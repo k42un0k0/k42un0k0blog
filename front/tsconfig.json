@@ -17,6 +17,6 @@
     "noImplicitReturns": true,
     "jsxImportSource": "theme-ui"
   },
-  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "lib/htmlElement.ss"],
   "exclude": ["node_modules"]
 }
