@@ -1,8 +1,10 @@
 /** @jsxImportSource theme-ui */
 import { keyframes } from '@emotion/react';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
-type Props = ComponentProps<'div'>;
+type Props = ComponentProps<'div'> & {
+  body?: ReactNode;
+};
 
 const wave = keyframes({
   '0%': {
@@ -15,29 +17,32 @@ const wave = keyframes({
     left: '100%',
   },
 });
-export default function Skelton(props: Props): JSX.Element {
+export default function Skelton({ body, ...props }: Props): JSX.Element {
+  if (body != null) {
+    return <>{body}</>;
+  }
   return (
     <div
-      {...props}
       sx={{
+        height: '100%',
         backgroundColor: '#ddd',
         position: 'relative',
         overflow: 'hidden',
-      }}
-    >
-      <div
-        sx={{
+        '::after': {
+          content: '""',
+          display: 'block',
           position: 'absolute',
           top: 0,
           bottom: 0,
           width: '100%',
           background: `linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.2
-            ), transparent  80%)`,
+              ), transparent  80%)`,
           animationName: `${wave}`,
           animationDuration: '3s',
           animationIterationCount: 'infinite',
-        }}
-      ></div>
-    </div>
+        },
+      }}
+      {...props}
+    />
   );
 }
