@@ -19,7 +19,7 @@ function Home(): JSX.Element {
             recent posts
           </h3>
           <ul>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => {
+            {[...Array(9).keys()].map((i) => {
               return <li key={i}>aaa</li>;
             })}
           </ul>
