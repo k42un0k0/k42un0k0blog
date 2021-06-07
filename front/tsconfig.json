@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "experimentalDecorators": true,
     "noImplicitReturns": true,
-    "jsxImportSource": "theme-ui"
+    "jsxImportSource": "theme-ui" 
   },
   "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "lib/htmlElement.ss"],
   "exclude": ["node_modules"]

@@ -1,12 +1,9 @@
-import * as O from 'fp-ts/Option';
-import * as f from 'fp-ts/function';
+/** @jsxImportSource theme-ui */
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
-import { useEffect, useRef } from 'react';
 import { useApiClientContext } from '../../../lib/apiClient';
-import { pick } from '../../../lib/fp';
-import { parentElement } from '../../../lib/htmlElement';
-import { useMockApi } from '../hooks/useMockApi';
+import { useMockApi } from '../../hooks/useMockApi';
+import { usePaddingToParent } from '../../hooks/usePaddingToParent';
 import { flex } from '../styles/utils';
 
 export default function Header(): JSX.Element {
@@ -23,30 +20,7 @@ export default function Header(): JSX.Element {
     removeAuthToken();
     snackbar.enqueueSnackbar('Sign Out Successful');
   };
-  const containerRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const parentOpt = f.pipe(O.fromNullable(containerRef.current), O.chain(parentElement));
-    const paddingTopOpt = f.pipe(
-      O.Do,
-      O.bind('parent', () => parentOpt),
-      O.bind('paddingTop', ({ parent }) => f.pipe(pick('style')(parent), O.chain(pick('paddingTop')))),
-      O.bind('clientHeight', () => f.pipe(O.fromNullable(containerRef.current), O.chain(pick('clientHeight')))),
-      O.map(({ parent, clientHeight, paddingTop }) => {
-        parent.style.paddingTop = clientHeight.toString() + 'px';
-        return paddingTop;
-      })
-    );
-    return (): void => {
-      f.pipe(
-        O.Do,
-        O.bind('parent', () => parentOpt),
-        O.bind('paddingTop', () => paddingTopOpt),
-        O.map(({ parent, paddingTop }) => {
-          parent.style.paddingTop = paddingTop;
-        })
-      );
-    };
-  });
+  const containerRef = usePaddingToParent<HTMLElement>();
   return (
     <header
       ref={containerRef}

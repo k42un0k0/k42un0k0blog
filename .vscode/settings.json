@@ -2,7 +2,7 @@
   "conventionalCommits.scopes": ["doc", "back", "front"],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true // ESLint を実行
+    // "source.fixAll.eslint": true // ESLint を実行
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
