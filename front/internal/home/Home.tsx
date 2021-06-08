@@ -1,5 +1,7 @@
 /** @jsxImportSource theme-ui */
 
+import Link from 'next/link';
+import { pagesPath } from '../../lib/$path';
 import { Skeleton } from '../components/skeleton';
 import { sticky, createStyles, sequence, flex } from '../components/styles/utils';
 import { useMockApi } from '../hooks/useMockApi';
@@ -86,17 +88,19 @@ function Home(): JSX.Element {
           <ul>
             {[...Array(9).keys()].map((i) => {
               return (
-                <li key={i} sx={styles.article}>
-                  <Skeleton sx={styles.article_image} />
-                  <div sx={styles.article_text}>
-                    <div>
-                      <Skeleton sx={styles.article_title} body={recents.data?.latest.title} />
+                <Link key={i} href={pagesPath.blogs._id(i).$url()}>
+                  <li key={i} sx={styles.article}>
+                    <Skeleton sx={styles.article_image} />
+                    <div sx={styles.article_text}>
+                      <div>
+                        <Skeleton sx={styles.article_title} body={recents.data?.latest.title} />
+                      </div>
+                      <div sx={styles.article_body}>
+                        <Skeleton sx={styles.article_body__skeleton} body={recents.data?.latest.body} />
+                      </div>
                     </div>
-                    <div sx={styles.article_body}>
-                      <Skeleton sx={styles.article_body__skeleton} body={recents.data?.latest.body} />
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                </Link>
               );
             })}
           </ul>

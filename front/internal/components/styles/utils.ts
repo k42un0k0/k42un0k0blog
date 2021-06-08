@@ -18,7 +18,7 @@ export const sequence = (styles: (ThemeUICSSObject | null)[]): ThemeUIStyleObjec
   const newStyle: Record<string, any[] | undefined> = {};
   let i = 0;
   for (const style of styles) {
-    if (style != null) {
+    if (style != undefined) {
       for (const key in style) {
         const prop = newStyle[key] ?? [null, null, null];
         prop[i] = style[key];

@@ -48,7 +48,7 @@ export function useApiClientValue(): ContextValue {
   useEffect(() => {
     void (async function (): Promise<void> {
       const resString = localStorage.getItem(LocalStorageKey.apiClient);
-      if (resString != null) {
+      if (resString != undefined) {
         const res = JSON.parse(resString) as Auth;
         if (compareAsc(new Date(res.expire), Date.now()) > 0) {
           setClient(createApiClientWithAuth(res.token));

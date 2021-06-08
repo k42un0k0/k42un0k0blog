@@ -18,7 +18,7 @@ const wave = keyframes({
   },
 });
 export default function Skelton({ body, ...props }: Props): JSX.Element {
-  if (body != null) {
+  if (body != undefined) {
     return <>{body}</>;
   }
   return (
