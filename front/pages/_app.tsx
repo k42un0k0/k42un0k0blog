@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '../styles/dracula.css';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
@@ -6,6 +7,7 @@ import { ThemeProvider } from 'theme-ui';
 import { light } from '../constant/theme';
 import { Layout } from '../internal/components/layout';
 import { ApiClientProvider, useApiClientValue } from '../lib/apiClient';
+
 type Props = {
   Component: React.VFC;
   pageProps: Record<string, unknown>;

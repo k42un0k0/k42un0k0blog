@@ -1,30 +1,28 @@
 import 'easymde/dist/easymde.min.css';
-import 'highlightjs';
-import DOMPurify from 'isomorphic-dompurify';
-import marked from 'marked';
-import 'highlightjs/styles/docco.css';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-
-const Editor = dynamic(async (): Promise<any> => import('react-simplemde-editor'), { ssr: false });
+import { marked } from '../../../lib/marked';
+import { useHighlight } from '../../hooks/useHighlight';
 
 export default function BlogsShow(): JSX.Element {
-  const [markdown, setMarkdown] = useState('');
+  const [markdown] = useState(`
+  # hello
+  im markdown text
+  \`\`\`ts
+  + const a = 1;
+  const a = 1;
+  \`\`\`
+  <button>click</button>
+  `);
 
+  const ref = useHighlight([markdown]);
   return (
     <div>
-      <Editor
-        onChange={(e: string): void => {
-          setMarkdown(e);
+      <span
+        ref={ref}
+        dangerouslySetInnerHTML={{
+          __html: marked(markdown),
         }}
       />
-      <div id="body">
-        <span
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(marked(markdown)),
-          }}
-        />
-      </div>
     </div>
   );
 }

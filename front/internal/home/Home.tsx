@@ -29,9 +29,6 @@ const styles = createStyles({
       { display: 'inline-block', width: '45%' },
     ]),
   },
-  pickup: {
-    height: '100vh',
-  },
   pickup_content: {
     margin: 'auto',
   },
@@ -106,7 +103,7 @@ function Home(): JSX.Element {
           </ul>
         </div>
       </div>
-      <div sx={styles.pickup}>
+      <div>
         <div sx={styles.pickup_content}>
           <h3 sx={styles.head}>pick up!</h3>
           <div>
