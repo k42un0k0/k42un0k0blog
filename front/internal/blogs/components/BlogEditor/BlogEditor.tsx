@@ -4,40 +4,48 @@ import { useToggle } from 'react-use';
 import { Switch } from 'theme-ui';
 import { md } from '../../../../lib/md';
 import { MarkdownEditor } from '../../../components/markdownEditor';
-import { createStyle, createStyles, sequence } from '../../../components/styles/utils';
+import { createStyles, sequence } from '../../../components/styles/utils';
 import { useHighlight } from '../../../hooks/useHighlight';
 
-const child = createStyle({
-  padding: [10, 40, 60],
-  width: '100vw',
-  flex: '0 0 auto',
-  transition: 'transform .5s',
-  '&.toggle': {
-    transform: 'translate(-100vw,0)',
+const childStyles = createStyles({
+  base: {
+    width: '100vw',
+    flex: '0 0 auto',
+    transition: 'transform .5s',
+    '&.preview': {
+      transform: 'translate(-100vw,0)',
+    },
   },
-  '&.toggle2': {
-    ...sequence([
-      null,
-      null,
-      {
-        transition: '0s',
-        width: '50%',
-        transform: 'none',
-      },
-    ]),
-  },
+  spread: sequence([
+    null,
+    null,
+    {
+      transition: '0s',
+      width: '50%',
+      transform: 'none',
+    },
+  ]),
 });
 const styles = createStyles({
   content: {
     display: 'flex',
     overflow: 'hidden',
+    paddingTop: 20,
   },
   editor: {
-    ...child,
+    ...childStyles.base,
+    '&.spread': {
+      ...childStyles.spread,
+      paddingRight: [10, 40, 60],
+    },
   },
   preview: {
-    ...child,
-    paddingTop: 110,
+    ...childStyles.base,
+    '&.spread': {
+      ...childStyles.spread,
+      paddingLeft: [10, 40, 60],
+    },
+    paddingTop: 50,
     overflow: 'auto',
     lineBreak: 'anywhere',
   },
@@ -51,7 +59,7 @@ const styles = createStyles({
   tools_switch: {
     bakgroundColor: 'gray',
 
-    'input:checked ~ &': {
+    'input:defaultChecked ~ &': {
       backgroundColor: 'lightgreen',
     },
   },
@@ -63,8 +71,8 @@ type Props = {
 };
 export default function BlogEditor({ value, onChange }: Props): JSX.Element {
   const ref = useHighlight([value]);
-  const [preview, togglePreview] = useToggle(false);
-  const [spread, toggleSpread] = useToggle(false);
+  const [preview, previewPreview] = useToggle(false);
+  const [spread, previewSpread] = useToggle(false);
   const isPC = useBreakpointIndex() >= 2;
   const disablePreview = spread && isPC;
   const showmihiraki = isPC;
@@ -78,11 +86,11 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
             sx={styles.tools_switch}
             onClick={(): void => {
               if (!preview) {
-                toggleSpread(false);
+                previewSpread(false);
               }
-              togglePreview();
+              previewPreview();
             }}
-            checked={preview}
+            defaultChecked={preview}
           />
         </div>
 
@@ -93,17 +101,17 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
               sx={styles.tools_switch}
               onClick={(): void => {
                 if (!spread) {
-                  togglePreview(false);
+                  previewPreview(false);
                 }
-                toggleSpread();
+                previewSpread();
               }}
-              checked={spread}
+              defaultChecked={spread}
             />
           </div>
         )}
       </div>
       <div sx={styles.content}>
-        <div sx={styles.editor} className={(preview ? 'toggle' : '') + (spread ? ' toggle2' : '')}>
+        <div sx={styles.editor} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
           <MarkdownEditor
             sx={{
               height: '100%',
@@ -119,7 +127,7 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
             }}
           />
         </div>
-        <div sx={styles.preview} className={(preview ? 'toggle' : '') + (spread ? ' toggle2' : '')}>
+        <div sx={styles.preview} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
           <div>
             <span
               ref={ref}

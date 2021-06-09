@@ -14,13 +14,13 @@ export const pagesPath = {
   },
   blogs: {
     _id: (id: string | number) => ({
+      edit: {
+        $url: (url?: { hash?: string }) => ({ pathname: '/blogs/[id]/edit' as const, query: { id }, hash: url?.hash })
+      },
       $url: (url?: { hash?: string }) => ({ pathname: '/blogs/[id]' as const, query: { id }, hash: url?.hash })
     }),
-    create: {
-      $url: (url?: { hash?: string }) => ({ pathname: '/blogs/create' as const, hash: url?.hash })
-    },
-    edit: {
-      $url: (url?: { hash?: string }) => ({ pathname: '/blogs/edit' as const, hash: url?.hash })
+    new: {
+      $url: (url?: { hash?: string }) => ({ pathname: '/blogs/new' as const, hash: url?.hash })
     },
     $url: (url?: { hash?: string }) => ({ pathname: '/blogs' as const, hash: url?.hash })
   },

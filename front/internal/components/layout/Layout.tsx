@@ -7,7 +7,7 @@ type Props = {
 };
 export default function Layout({ children }: Props): JSX.Element {
   return (
-    <div>
+    <div style={{ height: '100vh', boxSizing: 'border-box' }}>
       <Header />
       {children}
       <Footer />

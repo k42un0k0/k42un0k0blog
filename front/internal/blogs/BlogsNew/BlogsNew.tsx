@@ -9,10 +9,10 @@ import { createStyles } from '../../components/styles/utils';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 
 const styles = createStyles({
-  container: { display: 'grid', height: '100vh', gridTemplateRows: 'auto auto 1fr' },
+  container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr' },
 });
 
-export default function BlogsCreate(): JSX.Element {
+export default function BlogsNew(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
