@@ -1,4 +1,3 @@
-import 'easymde/dist/easymde.min.css';
 import DOMPurify from 'isomorphic-dompurify';
 import marked, { use } from 'marked';
 

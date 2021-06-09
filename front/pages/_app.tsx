@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import '../styles/dracula.css';
+import 'easymde/dist/easymde.min.css';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
