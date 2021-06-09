@@ -1,6 +1,7 @@
 import aspida from '@aspida/axios';
 import { compareAsc } from 'date-fns';
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useAsync, useLocalStorage } from 'react-use';
+import { useContext, createContext, useState } from 'react';
 import api from '../api/$api';
 import { LocalStorageKey } from './../constant/localstorage';
 import type { Auth } from '../api/@types';
@@ -33,34 +34,32 @@ export const ApiClientProvider = ApiClientContext.Provider;
  * @return {Object} Contextの値
  */
 export function useApiClientValue(): ContextValue {
+  const [value, setValue, remove] = useLocalStorage(LocalStorageKey.apiClient, '');
   // Contextに入れる値の生成
   const [client, setClient] = useState(apiClient);
   function setAuthResponse(res: Auth): void {
-    localStorage.setItem(LocalStorageKey.apiClient, JSON.stringify(res));
+    setValue(JSON.stringify(res));
     setClient(createApiClientWithAuth(res.token));
   }
   function removeAuthToken(): void {
-    localStorage.removeItem(LocalStorageKey.apiClient);
+    remove();
     setClient(createApiClient());
   }
 
   // 描画時にlocalstorageを読み取り、expireのチェックとclientの再設定をする
-  useEffect(() => {
-    void (async function (): Promise<void> {
-      const resString = localStorage.getItem(LocalStorageKey.apiClient);
-      if (resString != undefined) {
-        const res = JSON.parse(resString) as Auth;
-        if (compareAsc(new Date(res.expire), Date.now()) > 0) {
-          setClient(createApiClientWithAuth(res.token));
-        } else {
-          const refreshRes = await apiClient.auth.refresh_token.$get({
-            config: { headers: { Authorization: 'Bearer ' + res.token } },
-          });
-          setAuthResponse(refreshRes);
-        }
+  useAsync(async (): Promise<void> => {
+    if (value != undefined) {
+      const auth = JSON.parse(value) as Auth;
+      if (compareAsc(new Date(auth.expire), Date.now()) > 0) {
+        setClient(createApiClientWithAuth(auth.token));
+      } else {
+        const refreshRes = await apiClient.auth.refresh_token.$get({
+          config: { headers: { Authorization: 'Bearer ' + auth.token } },
+        });
+        setAuthResponse(refreshRes);
       }
-    })();
-  }, []);
+    }
+  }, [value]);
   return { apiClient: client, setAuthResponse, removeAuthToken };
 }
 
