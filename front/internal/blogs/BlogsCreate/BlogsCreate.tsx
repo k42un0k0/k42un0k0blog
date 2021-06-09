@@ -1,12 +1,10 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import { pagesPath } from '../../../lib/$path';
 import { useApiClient } from '../../../lib/apiClient';
-import { katex } from '../../../lib/katex';
-import { marked } from '../../../lib/marked';
-import { KatexCssLink } from '../../components/layout';
+import { md } from '../../../lib/md';
+import { HeadKatex } from '../../components/layout';
 import { MarkdownEditor } from '../../components/markdownEditor';
 import { useHighlight } from '../../hooks/useHighlight';
 
@@ -29,9 +27,7 @@ export default function BlogsCreate(): JSX.Element {
   const ref = useHighlight([markdown]);
   return (
     <div>
-      <Head>
-        <KatexCssLink />
-      </Head>
+      <HeadKatex />
       <h1>blogs page</h1>
       <MarkdownEditor
         onChange={(v: string): void => {
@@ -42,7 +38,7 @@ export default function BlogsCreate(): JSX.Element {
         <span
           ref={ref}
           dangerouslySetInnerHTML={{
-            __html: katex(marked(markdown)),
+            __html: md.render(markdown),
           }}
         />
       </div>

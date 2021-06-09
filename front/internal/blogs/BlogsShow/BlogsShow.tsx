@@ -1,6 +1,6 @@
 import 'easymde/dist/easymde.min.css';
 import { useState } from 'react';
-import { marked } from '../../../lib/marked';
+import { md } from '../../../lib/md';
 import { useHighlight } from '../../hooks/useHighlight';
 
 export default function BlogsShow(): JSX.Element {
@@ -20,7 +20,7 @@ export default function BlogsShow(): JSX.Element {
       <span
         ref={ref}
         dangerouslySetInnerHTML={{
-          __html: marked(markdown),
+          __html: md.render(markdown),
         }}
       />
     </div>
