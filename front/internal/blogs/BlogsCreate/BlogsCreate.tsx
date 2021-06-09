@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
@@ -7,11 +6,9 @@ import { pagesPath } from '../../../lib/$path';
 import { useApiClient } from '../../../lib/apiClient';
 import { katex } from '../../../lib/katex';
 import { marked } from '../../../lib/marked';
+import { KatexCssLink } from '../../components/layout';
+import { MarkdownEditor } from '../../components/markdownEditor';
 import { useHighlight } from '../../hooks/useHighlight';
-
-const Editor = dynamic<{ onChange: (v: string) => void }>(async (): Promise<any> => import('react-simplemde-editor'), {
-  ssr: false,
-});
 
 export default function BlogsCreate(): JSX.Element {
   const router = useRouter();
@@ -25,7 +22,6 @@ export default function BlogsCreate(): JSX.Element {
     },
     {
       onSuccess: () => {
-        // Invalidate and refetch
         void queryClient.invalidateQueries(apiClient.blogs.$path());
       },
     }
@@ -34,15 +30,10 @@ export default function BlogsCreate(): JSX.Element {
   return (
     <div>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css"
-          integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc"
-          crossOrigin="anonymous"
-        />
+        <KatexCssLink />
       </Head>
       <h1>blogs page</h1>
-      <Editor
+      <MarkdownEditor
         onChange={(v: string): void => {
           setMarkdown(v);
         }}
