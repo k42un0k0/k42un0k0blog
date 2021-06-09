@@ -1,5 +1,5 @@
+import * as O from 'fp-ts/Option';
 import type { ThemeUICSSObject, ThemeUIStyleObject } from 'theme-ui';
-
 /**
  * 型をつけて補完できるようにする、それだけ
  * @param  {ThemeUIStyleObject} style
@@ -16,17 +16,15 @@ export const createStyles = <K extends string>(styles: Record<K, ThemeUIStyleObj
  */
 export const sequence = (styles: (ThemeUICSSObject | null)[]): ThemeUIStyleObject => {
   const newStyle: Record<string, any[] | undefined> = {};
-  let i = 0;
-  for (const style of styles) {
-    if (style != undefined) {
-      for (const key in style) {
+  styles.forEach((v, i) => {
+    O.map(() => {
+      for (const key in v) {
         const prop = newStyle[key] ?? [null, null, null];
-        prop[i] = style[key];
+        prop[i] = v[key];
         newStyle[key] = prop;
       }
-    }
-    i++;
-  }
+    })(O.fromNullable(v));
+  });
   return newStyle;
 };
 

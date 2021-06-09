@@ -1,7 +1,8 @@
 import aspida from '@aspida/axios';
 import { compareAsc } from 'date-fns';
-import { useAsync, useLocalStorage } from 'react-use';
-import { useContext, createContext, useState } from 'react';
+import * as O from 'fp-ts/Option';
+import { useLocalStorage } from 'react-use';
+import { useContext, createContext, useState, useEffect } from 'react';
 import api from '../api/$api';
 import { LocalStorageKey } from './../constant/localstorage';
 import type { Auth } from '../api/@types';
@@ -47,9 +48,9 @@ export function useApiClientValue(): ContextValue {
   }
 
   // 描画時にlocalstorageを読み取り、expireのチェックとclientの再設定をする
-  useAsync(async (): Promise<void> => {
-    if (value != undefined) {
-      const auth = JSON.parse(value) as Auth;
+  useEffect(() => {
+    O.map(async (v: string) => {
+      const auth = JSON.parse(v) as Auth;
       if (compareAsc(new Date(auth.expire), Date.now()) > 0) {
         setClient(createApiClientWithAuth(auth.token));
       } else {
@@ -58,7 +59,7 @@ export function useApiClientValue(): ContextValue {
         });
         setAuthResponse(refreshRes);
       }
-    }
+    })(O.fromNullable(value));
   }, [value]);
   return { apiClient: client, setAuthResponse, removeAuthToken };
 }

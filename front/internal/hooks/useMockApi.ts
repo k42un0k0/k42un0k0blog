@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useMount } from 'react-use';
+import { useState } from 'react';
 
 type Options = {
   duration: number;
@@ -16,10 +17,10 @@ export const useMockApi = <T>(mockValue: T, options?: Options): MockResult<T | u
   const { duration } = options ?? { duration: 1000 };
   const [state, setState] = useState<T | undefined>(undefined);
 
-  useEffect(() => {
+  useMount(() => {
     setTimeout(() => {
       setState(mockValue);
     }, duration);
-  }, []);
+  });
   return { data: state };
 };

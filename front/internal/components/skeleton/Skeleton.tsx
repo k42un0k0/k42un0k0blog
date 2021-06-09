@@ -1,5 +1,8 @@
 /** @jsxImportSource theme-ui */
 import { keyframes } from '@emotion/react';
+import * as O from 'fp-ts/Option';
+import { constant } from 'fp-ts/function';
+import { print } from '../utils/jsx';
 import type { ComponentProps, ReactNode } from 'react';
 
 type Props = ComponentProps<'div'> & {
@@ -18,31 +21,31 @@ const wave = keyframes({
   },
 });
 export default function Skelton({ body, ...props }: Props): JSX.Element {
-  if (body != undefined) {
-    return <>{body}</>;
-  }
-  return (
-    <div
-      sx={{
-        height: '100%',
-        backgroundColor: '#ddd',
-        position: 'relative',
-        overflow: 'hidden',
-        '::after': {
-          content: '""',
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          width: '100%',
-          background: `linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.2
-              ), transparent  80%)`,
-          animationName: `${wave}`,
-          animationDuration: '3s',
-          animationIterationCount: 'infinite',
-        },
-      }}
-      {...props}
-    />
-  );
+  return O.match<ReactNode, JSX.Element>(
+    constant(
+      <div
+        sx={{
+          height: '100%',
+          backgroundColor: '#ddd',
+          position: 'relative',
+          overflow: 'hidden',
+          '::after': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            width: '100%',
+            background: `linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.2
+          ), transparent  80%)`,
+            animationName: `${wave}`,
+            animationDuration: '3s',
+            animationIterationCount: 'infinite',
+          },
+        }}
+        {...props}
+      />
+    ),
+    print
+  )(O.fromNullable(body));
 }

@@ -9,11 +9,13 @@ import { useHighlight } from '../../../hooks/useHighlight';
 
 const childStyles = createStyles({
   base: {
-    width: '100vw',
+    width: '100%',
+    height: '100%',
     flex: '0 0 auto',
+    boxSizing: 'border-box',
     transition: 'transform .5s',
     '&.preview': {
-      transform: 'translate(-100vw,0)',
+      transform: 'translate(-100%,0)',
     },
   },
   spread: sequence([
@@ -36,14 +38,14 @@ const styles = createStyles({
     ...childStyles.base,
     '&.spread': {
       ...childStyles.spread,
-      paddingRight: [10, 40, 60],
+      paddingRight: [null, null, 20],
     },
   },
   preview: {
     ...childStyles.base,
     '&.spread': {
       ...childStyles.spread,
-      paddingLeft: [10, 40, 60],
+      paddingLeft: [null, null, 20],
     },
     paddingTop: 50,
     overflow: 'auto',
@@ -93,7 +95,6 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
             defaultChecked={preview}
           />
         </div>
-
         {showmihiraki && (
           <div sx={styles.tools_tool}>
             <Switch
@@ -117,6 +118,8 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
               height: '100%',
               '.EasyMDEContainer': {
                 height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
               },
               '.CodeMirror': {
                 height: '100%',
