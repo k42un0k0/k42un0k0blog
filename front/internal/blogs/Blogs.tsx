@@ -9,8 +9,8 @@ function Blogs(): JSX.Element {
   return (
     <div>
       <h1>blogs page</h1>
-      <Link href={pagesPath.blogs.create.$url()}>goto blogs create page</Link>
-      <Link href={pagesPath.blogs.edit.$url()}>goto blogs edit page</Link>
+      <Link href={pagesPath.blogs.new.$url()}>goto blogs create page</Link>
+      <Link href={pagesPath.blogs._id(1).edit.$url()}>goto blogs edit page</Link>
       {query.data?.map((item) => {
         return <div key={item.id}>{JSON.stringify(item)}</div>;
       })}

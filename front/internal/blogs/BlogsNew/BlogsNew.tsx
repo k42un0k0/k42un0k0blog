@@ -9,7 +9,7 @@ import { createStyles } from '../../components/styles/utils';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 
 const styles = createStyles({
-  container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr' },
+  container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
 });
 
 export default function BlogsNew(): JSX.Element {
@@ -35,7 +35,7 @@ export default function BlogsNew(): JSX.Element {
         blogs page
         <button
           onClick={(): void => {
-            mutation();
+            mutation.mutate();
           }}
         >
           押して
