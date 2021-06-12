@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
-import { useApiClientContext } from '../../../lib/apiClient';
+import { useApiClientContext } from '../../context/apiClient';
 import { useMockApi } from '../../hooks/useMockApi';
 import { usePaddingToParent } from '../../hooks/usePaddingToParent';
 import { flex } from '../styles/utils';

@@ -1,4 +1,4 @@
-import { HttpStatus } from '../../lib/httpStatus';
+import { HttpStatus } from '../../constant/httpStatus';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {

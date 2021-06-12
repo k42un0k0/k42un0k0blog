@@ -3,9 +3,9 @@ import { compareAsc } from 'date-fns';
 import * as O from 'fp-ts/Option';
 import { useLocalStorage } from 'react-use';
 import { useContext, createContext, useState, useEffect } from 'react';
-import api from '../api/$api';
-import { LocalStorageKey } from './../constant/localstorage';
-import type { Auth } from '../api/@types';
+import api from '../../api/$api';
+import { LocalStorageKey } from '../../constant/localstorage';
+import type { Auth } from '../../api/@types';
 
 type ContextValue = { apiClient: typeof apiClient; setAuthResponse: (res: Auth) => void; removeAuthToken: () => void };
 

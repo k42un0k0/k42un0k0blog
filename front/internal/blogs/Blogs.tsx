@@ -1,7 +1,7 @@
 import { useAspidaQuery } from '@aspida/react-query';
 import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
-import { useApiClient } from '../../lib/apiClient';
+import { useApiClient } from '../context/apiClient';
 
 function Blogs(): JSX.Element {
   const apiClient = useApiClient();

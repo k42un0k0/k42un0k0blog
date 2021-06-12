@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { pagesPath } from '../../../lib/$path';
-import { useApiClientContext } from '../../../lib/apiClient';
+import { useApiClientContext } from '../../context/apiClient';
 import type { FormEvent } from 'react';
 
 export default function SignIn(): JSX.Element {

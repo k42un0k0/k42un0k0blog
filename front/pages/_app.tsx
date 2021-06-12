@@ -7,7 +7,7 @@ import React from 'react';
 import { ThemeProvider } from 'theme-ui';
 import { light } from '../constant/theme';
 import { Layout } from '../internal/components/layout';
-import { ApiClientProvider, useApiClientValue } from '../lib/apiClient';
+import { ApiClientProvider, useApiClientValue } from '../internal/context/apiClient';
 
 type Props = {
   Component: React.VFC;
