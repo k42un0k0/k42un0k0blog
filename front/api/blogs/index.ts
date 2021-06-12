@@ -18,7 +18,7 @@ export type Methods = {
     reqBody: {
       title: string;
       body: string;
-      blog_type: number;
+      blog_type: Types.BlogType;
     };
   };
 };

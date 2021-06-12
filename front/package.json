@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "lint": "eslint .",
-    "format": "eslint . --fix && prettier --write .",
+    "lint": "eslint",
+    "lint:time": "TIMING=1 yarn lint",
+    "lint:fix": "yarn lint --fix",
+    "format": "prettier --write",
     "generate:aspida": "openapi2aspida -i ../back/api/openapi.yml",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

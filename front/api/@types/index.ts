@@ -17,9 +17,12 @@ export type UserResponse = {
   email: string;
 };
 
+/** 0 - slide 1 - markdown 2 - richtext */
+export type BlogType = 0 | 1 | 2;
+
 export type BlogResponse = {
   id: number;
   title: string;
   body: string;
-  blog_type: number;
+  blog_type: BlogType;
 };

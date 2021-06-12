@@ -205,7 +205,7 @@ paths:
                 body:
                   type: string
                 blog_type:
-                  type: number
+                  $ref: '#/components/schemas/BlogType'
               required:
                 - title
                 - body
@@ -307,6 +307,16 @@ components:
         - id
         - name
         - email
+    BlogType:
+      type: number
+      enum: 
+        - 0
+        - 1
+        - 2
+      description: >
+        0 - slide
+        1 - markdown
+        2 - richtext
     BlogResponse:
       type: object
       properties:
@@ -317,9 +327,10 @@ components:
         body:
           type: string
         blog_type:
-          type: number
+          $ref: '#/components/schemas/BlogType'
       required:
         - id
         - title
         - body
         - blog_type
+    

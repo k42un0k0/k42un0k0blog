@@ -34,7 +34,8 @@
       {
         "alphabetize": { "order": "asc" }
       }
-    ]
+    ],
+    "@typescript-eslint/no-unsafe-assignment":0
   },
   "parserOptions": {
     "project": ["tsconfig.json"]

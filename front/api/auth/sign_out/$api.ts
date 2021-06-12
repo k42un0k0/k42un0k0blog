@@ -13,14 +13,16 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   return {
     /**
      * Sign Out
+     * @returns successfully authorized
      */
     post: (option?: { config?: T }) =>
-      fetch<void, BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).send(),
+      fetch<Methods0['post']['resBody'], BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).json(),
     /**
      * Sign Out
+     * @returns successfully authorized
      */
     $post: (option?: { config?: T }) =>
-      fetch<void, BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).send().then(r => r.body),
+      fetch<Methods0['post']['resBody'], BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).json().then(r => r.body),
     $path: () => `${prefix}${PATH0}`
   }
 }

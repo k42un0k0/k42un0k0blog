@@ -29,6 +29,7 @@ const childStyles = createStyles({
   ]),
 });
 const styles = createStyles({
+  container: { height: '100%', display: 'grid', gridTemplateRows: 'auto 1fr' },
   content: {
     display: 'flex',
     overflow: 'hidden',
@@ -79,7 +80,7 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
   const disablePreview = spread && isPC;
   const showmihiraki = isPC;
   return (
-    <>
+    <div sx={styles.container}>
       <div sx={styles.tools}>
         <div sx={styles.tools_tool}>
           <Switch
@@ -142,6 +143,6 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

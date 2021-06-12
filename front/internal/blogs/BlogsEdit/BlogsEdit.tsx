@@ -7,6 +7,7 @@ import { useApiClient } from '../../../lib/apiClient';
 import { HeadKatex } from '../../components/layout';
 import { createStyles } from '../../components/styles/utils';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
+import { LabelInput } from '../components/LabelInput';
 
 const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
@@ -41,6 +42,7 @@ export default function BlogsEdit(): JSX.Element {
           押して
         </button>
       </h1>
+      <LabelInput name="title" />
       <BlogEditor
         value={value}
         onChange={(v): void => {
