@@ -30,7 +30,8 @@ export default function BlogsNew(): JSX.Element {
       },
     }
   );
-  const [value, setValue] = useState('');
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
   const [blogType, setBlogType] = useState<BlogType>(0);
   return (
     <div sx={styles.container}>
@@ -45,7 +46,13 @@ export default function BlogsNew(): JSX.Element {
           押して
         </button>
       </h1>
-      <LabelInput name="title" />
+      <LabelInput
+        name="title"
+        value={title}
+        onChange={(e): void => {
+          setTitle(e.target.value);
+        }}
+      />
       <Select
         value={blogType}
         onChange={(e): void => {
@@ -64,9 +71,9 @@ export default function BlogsNew(): JSX.Element {
         })}
       </Select>
       <BlogEditor
-        value={value}
+        value={body}
         onChange={(v): void => {
-          setValue(v);
+          setBody(v);
         }}
       />
     </div>

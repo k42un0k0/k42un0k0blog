@@ -1,11 +1,10 @@
 /** @jsxImportSource theme-ui */
-import { useState } from 'react';
 import { Label, Input } from 'theme-ui';
 import { createStyles } from '../../../components/styles/utils';
+import type { ChangeEventHandler } from 'react';
 
 const styles = createStyles({
   container: {
-    paddingBottom: 20,
     '& label': {
       transition: '.25s',
       transform: 'translate(10px, 30px)',
@@ -21,21 +20,15 @@ const styles = createStyles({
 });
 
 type Props = {
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   name: string;
 };
-export default function LabelInput({ name }: Props): JSX.Element {
-  const [value, setValue] = useState('');
+export default function LabelInput({ name, value, onChange }: Props): JSX.Element {
   return (
     <div sx={styles.container} className={value ? 'has-value' : ''}>
       <Label htmlFor={name}>タイトル</Label>
-      <Input
-        id={name}
-        name={name}
-        value={value}
-        onChange={(e): void => {
-          setValue(e.target.value);
-        }}
-      />
+      <Input id={name} name={name} value={value} onChange={onChange} />
     </div>
   );
 }
