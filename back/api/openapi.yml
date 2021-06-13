@@ -6,7 +6,6 @@ paths:
   /sign_in:
     post:
       description: Sign In
-      operationId: signIn
       requestBody:
         content:
           application/json; charset=utf-8:
@@ -25,7 +24,6 @@ paths:
   /auth/refresh_token:
     get:
       description: Refresh Token
-      operationId: refresh token
       responses:
         "200":
           description: successfully authorized
@@ -38,7 +36,6 @@ paths:
   /auth/sign_out:
     post:
       description: Sign Out
-      operationId: Sign Out
       responses:
         "200":
           description: successfully authorized
@@ -56,7 +53,6 @@ paths:
   /users:
     get:
       description: ユーザー一覧の取得
-      operationId: userList
       parameters:
         - in: query
           name: page
@@ -76,7 +72,6 @@ paths:
           description: authorization error
     post:
       description: ユーザーの作成
-      operationId: userCreate
       requestBody:
         content:
           application/json; charset=utf-8:
@@ -108,7 +103,6 @@ paths:
   /users/{id}:
     get:
       description: ユーザーの取得
-      operationId: userGet
       parameters:
         - in: path
           name: id
@@ -124,7 +118,6 @@ paths:
                 $ref: "#/components/schemas/UserResponse"
     put:
       description: ユーザーの更新
-      operationId: userUpdate
       parameters:
         - in: path
           name: id
@@ -153,7 +146,6 @@ paths:
   /users/{id}/password:
     put:
       description: ユーザーのパスワードの更新
-      operationId: userUpdatePassword
       parameters:
         - in: path
           name: id
@@ -181,7 +173,6 @@ paths:
   /blogs:
     get:
       description: ブログ一覧の取得
-      operationId: blogList
       responses:
         "200":
           description: successfully request
@@ -193,23 +184,11 @@ paths:
                   $ref: "#/components/schemas/BlogResponse"
     post:
       description: ブログの作成
-      operationId: blogCreate
       requestBody:
         content:
           application/json; charset=utf-8:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                body:
-                  type: string
-                blog_type:
-                  $ref: '#/components/schemas/BlogType'
-              required:
-                - title
-                - body
-                - blog_type
+              $ref: "#/components/schemas/BlogCreateRequestBody"
       responses:
         "200":
           description: successfully request
@@ -222,7 +201,6 @@ paths:
   /blogs/{id}:
     get:
       description: ユーザーの取得
-      operationId: userGet
       parameters:
         - in: path
           name: id
@@ -238,7 +216,6 @@ paths:
                 $ref: "#/components/schemas/BlogResponse"
     put:
       description: ユーザーの更新
-      operationId: userUpdate
       parameters:
         - in: path
           name: id
@@ -249,12 +226,7 @@ paths:
         content:
           application/json; charset=utf-8:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                body:
-                  type: string
+              $ref: "#/components/schemas/BlogUpdateRequestBody"
       responses:
         "200":
           description: successfully request
@@ -317,6 +289,32 @@ components:
         0 - slide
         1 - markdown
         2 - richtext
+    BlogCreateRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        blog_type:
+          $ref: '#/components/schemas/BlogType'
+        published_at:
+          type: string
+          format: date-time
+      required:
+        - blog_type
+    BlogUpdateRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+      required:
+        - ""
     BlogResponse:
       type: object
       properties:
@@ -328,6 +326,8 @@ components:
           type: string
         blog_type:
           $ref: '#/components/schemas/BlogType'
+        published_at:
+          type: string
       required:
         - id
         - title

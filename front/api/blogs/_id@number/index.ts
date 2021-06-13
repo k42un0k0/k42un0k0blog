@@ -14,10 +14,6 @@ export type Methods = {
     status: 200;
     /** successfully request */
     resBody: Types.BlogResponse;
-
-    reqBody: {
-      title: string;
-      body: string;
-    };
+    reqBody: Types.BlogUpdateRequestBody;
   };
 };

@@ -11,7 +11,8 @@
     "lint:time": "TIMING=1 yarn lint",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write",
-    "generate:aspida": "openapi2aspida -i ../back/api/openapi.yml",
+    "openapi2aspida": "openapi2aspida",
+    "pathpida": "pathpida",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
