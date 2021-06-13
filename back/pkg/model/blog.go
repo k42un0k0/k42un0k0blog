@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type BlogType int
 
 const (
@@ -9,8 +11,9 @@ const (
 )
 
 type Blog struct {
-	ID       uint
-	Title    string
-	Body     string
-	BlogType BlogType
+	ID          uint
+	Title       string
+	Body        string
+	BlogType    BlogType
+	PublishedAt *time.Time
 }

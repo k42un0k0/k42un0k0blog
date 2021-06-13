@@ -9,7 +9,7 @@ func configRouting(r *gin.Engine, auth gin.IRoutes, c Container) {
 
 	r.GET("/", c.HomeController.HomeGet)
 
-	auth.POST("/blogs", c.BlogsController.BlogCreate)
+	r.POST("/blogs", c.BlogsController.BlogCreate)
 	auth.PUT("/blogs/:id", c.BlogsController.BlogUpdate)
 	r.GET("/blogs/:id", c.BlogsController.BlogGet)
 	r.GET("/blogs", c.BlogsController.BlogList)

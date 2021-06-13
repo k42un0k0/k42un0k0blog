@@ -14,4 +14,5 @@ export const schema = yup.object().shape({
       flow(fromNullable, map(isBlogType), getOrElse<boolean>(constant(false)))
     ),
   body: yup.string(),
+  publish: yup.bool(),
 });

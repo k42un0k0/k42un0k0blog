@@ -48,9 +48,10 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 		return
 	}
 	blog := model.Blog{
-		Title:    json.title,
-		Body:     json.body,
-		BlogType: json.blog_type,
+		Title:       json.Title,
+		Body:        json.Body,
+		BlogType:    json.BlogType,
+		PublishedAt: json.PublishedAt,
 	}
 	b, err := BlogsController.blogRepository.Create(blog)
 	if err != nil {
@@ -70,12 +71,14 @@ func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
 	if e := c.BindJSON(&json); e != nil {
 		return
 	}
-	if json.title != nil {
-		blog.Title = *json.title
+	if json.Title != nil {
+		blog.Title = *json.Title
 	}
-	if json.body != nil {
-		blog.Body = *json.body
+	if json.Body != nil {
+		blog.Body = *json.Body
 	}
+	blog.PublishedAt = json.PublishedAt
+
 	b, err := BlogsController.blogRepository.Update(blog)
 	log.Print(b, blog)
 	if err != nil {
