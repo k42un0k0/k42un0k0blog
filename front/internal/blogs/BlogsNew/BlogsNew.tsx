@@ -1,16 +1,17 @@
 /** @jsxImportSource theme-ui */
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useMutation, useQueryClient } from 'react-query';
-import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { Select } from 'theme-ui';
 import { pagesPath } from '../../../lib/$path';
-import { isBlogType } from '../../../pkg/model/blog';
 import { HeadKatex } from '../../components/layout';
 import { createStyles } from '../../components/styles/utils';
 import { useApiClient } from '../../context/apiClient';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
-import type { BlogType } from '../../../api/@types';
+import { schema } from '../constants/schema';
+import type { ReactElement } from 'react';
 const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
 });
@@ -18,51 +19,40 @@ const styles = createStyles({
 export default function BlogsNew(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
-  const queryClient = useQueryClient();
   const mutation = useMutation(
-    async () => {
-      await apiClient.blogs.post({ body: { title: 'hello', body: 'test', blog_type: 1 } });
+    async (data: any) => {
+      await apiClient.blogs.post({ body: data });
       await router.push(pagesPath.blogs.$url());
     },
     {
       onSuccess: () => {
-        void queryClient.invalidateQueries(apiClient.blogs.$path());
+        void 0;
       },
     }
   );
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [blogType, setBlogType] = useState<BlogType>(0);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<{ title: string; blog_type: number; body: string }>({ resolver: yupResolver(schema) });
+  console.log(errors);
   return (
-    <div sx={styles.container}>
+    <form
+      sx={styles.container}
+      onSubmit={handleSubmit((data) => {
+        console.log(data);
+        mutation.mutate(data);
+      })}
+    >
       <HeadKatex />
       <h1>
         blogs page
-        <button
-          onClick={(): void => {
-            mutation.mutate();
-          }}
-        >
-          押して
-        </button>
+        <input type="submit" value="押して"></input>
       </h1>
-      <LabelInput
-        name="title"
-        value={title}
-        onChange={(e): void => {
-          setTitle(e.target.value);
-        }}
-      />
-      <Select
-        value={blogType}
-        onChange={(e): void => {
-          const v = parseInt(e.target.value);
-          if (isBlogType(v)) {
-            setBlogType(v);
-          }
-        }}
-      >
-        {[0, 1, 2].map((i) => {
+      <LabelInput {...register('title')} />
+      <Select {...register('blog_type')}>
+        {[0, 1, 3].map((i) => {
           return (
             <option key={i} value={i}>
               {i}
@@ -70,12 +60,7 @@ export default function BlogsNew(): JSX.Element {
           );
         })}
       </Select>
-      <BlogEditor
-        value={body}
-        onChange={(v): void => {
-          setBody(v);
-        }}
-      />
-    </div>
+      <Controller name="body" control={control} render={({ field }): ReactElement => <BlogEditor {...field} />} />
+    </form>
   );
 }

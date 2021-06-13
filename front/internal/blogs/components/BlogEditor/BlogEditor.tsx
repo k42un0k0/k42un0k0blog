@@ -1,6 +1,7 @@
 /** @jsxImportSource theme-ui */
 import { useBreakpointIndex } from '@theme-ui/match-media';
 import { useToggle } from 'react-use';
+import { useState } from 'react';
 import { Switch } from 'theme-ui';
 import { md } from '../../../../lib/md';
 import { MarkdownEditor } from '../../../components/markdownEditor';
@@ -69,16 +70,20 @@ const styles = createStyles({
 });
 
 type Props = {
-  value: string;
   onChange: (v: string) => void;
 };
-export default function BlogEditor({ value, onChange }: Props): JSX.Element {
-  const ref = useHighlight([value]);
+export default function BlogEditor({ onChange }: Props): JSX.Element {
   const [preview, previewPreview] = useToggle(false);
   const [spread, previewSpread] = useToggle(false);
   const isPC = useBreakpointIndex() >= 2;
   const disablePreview = spread && isPC;
   const showmihiraki = isPC;
+  const [value, setValue] = useState('');
+  const handleChange = (v: string): void => {
+    setValue(v);
+    onChange(v);
+  };
+  const ref = useHighlight([value]);
   return (
     <div sx={styles.container}>
       <div sx={styles.tools}>
@@ -126,9 +131,7 @@ export default function BlogEditor({ value, onChange }: Props): JSX.Element {
                 height: '100%',
               },
             }}
-            onChange={(v: string): void => {
-              onChange(v);
-            }}
+            onChange={handleChange}
           />
         </div>
         <div sx={styles.preview} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
