@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 function create_migration(){
     docker-compose run --rm app migrate create -ext sql -dir migrations $@
     echo chown $(whoami) ./back/migrations/$1.down.sql
@@ -11,9 +10,25 @@ function migrate(){
     docker-compose run --rm app migrate -path ./migrations -database "mysql://root:example@tcp(db:3306)/k42un0k0blog_develop" $@
 }
 
+if [ $# -gt 0 ]; then
+    if [ $1 = "--help" ]; then
+        cat<<EOF
+Usage: db.sh COMMAND [arg...]
 
-if [ $1 = "create_migration" ]; then
-    create_migration ${@:2}
-elif [ $1 = "migrate" ]; then
-    migrate ${@:2}
+Commands:
+    create_migration NAME
+        マイグレーションファイルを作成する。ファイル名はタイムスタンプとNAMEを合わせたものになる 
+        例えば"db.sh create_migration aaa"を実行すると"年月日時分秒ミリ秒_aaa.up.sql"と"年月日時分秒ミリ秒_aaa.down.sql"が生成される
+
+    migrate [up | down | force] [arg...]
+        migrateコマンドをラップしたもの
+        詳細は"docker-compose run --rm app migrate --help"を参照
+EOF
+    elif [ $1 = "create_migration" ]; then
+        create_migration ${@:2}
+    elif [ $1 = "migrate" ]; then
+        migrate ${@:2}
+    fi
+else
+    $0 --help
 fi
