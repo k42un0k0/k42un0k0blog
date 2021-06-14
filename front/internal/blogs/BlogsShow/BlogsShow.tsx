@@ -14,7 +14,7 @@ import { useQueryWithSlug } from '../../hooks/useQueryWithSlug';
 export default function BlogsShow(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
-  const id = idSchema.validateSync(router.query.id);
+  const id = idSchema.cast(router.query.id);
 
   const { data } = useQueryWithSlug(id, isNumber, apiClient.blogs._id);
 

@@ -1,15 +1,16 @@
 /** @jsxImportSource theme-ui */
-import { useAspidaQuery } from '@aspida/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { Select } from 'theme-ui';
-import * as yup from 'yup';
 import { pagesPath } from '../../../lib/$path';
+import { isNumber } from '../../../lib/number';
+import { idSchema } from '../../../lib/schema';
 import { HeadKatex } from '../../components/layout';
 import { createStyles } from '../../components/styles/utils';
 import { useApiClient } from '../../context/apiClient';
+import { useQueryWithSlug } from '../../hooks/useQueryWithSlug';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
 import { schema } from '../constants/schema';
@@ -19,18 +20,13 @@ const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
 });
 
-const idSchema = yup.number();
 export default function BlogsEdit(): JSX.Element {
   const router = useRouter();
 
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
-  const id = router.query.id;
-
-  if (id == null || !idSchema.isValidSync(id)) {
-    return <div>not valid</div>;
-  }
-  const query = useAspidaQuery(apiClient.blogs._id(id), {});
+  const id = idSchema.cast(router.query.id);
+  const query = useQueryWithSlug(id, isNumber, apiClient.blogs._id);
   const mutation = useMutation(
     async (data: any) => {
       await apiClient.blogs.post({ body: data });
@@ -38,7 +34,7 @@ export default function BlogsEdit(): JSX.Element {
     },
     {
       onSuccess: () => {
-        void queryClient.invalidateQueries(apiClient.blogs._id(id).$path());
+        if (id != null) void queryClient.invalidateQueries(apiClient.blogs._id(id).$path());
       },
     }
   );

@@ -25,10 +25,10 @@ export class ExpiredError extends Error {
 type ValidateTokenError = ExpiredError | NullError | ValidationError;
 
 export const validateToken: (v: string | undefined) => E.Either<ValidateTokenError, Auth> = flow(
-  E.fromNullable<ValidateTokenError>(new NullError()),
+  E.fromNullable(new NullError()),
   E.filterOrElse(isNotEmpty, constant(new NullError())),
-  E.chain<ValidateTokenError, string, Auth>(jsonToAuth),
-  E.filterOrElse<ValidateTokenError, Auth>(
+  E.chainW(jsonToAuth),
+  E.filterOrElseW(
     (a) => compareAsc(new Date(a.expire), Date.now()) < 0,
     (a) => new ExpiredError(a.token)
   )

@@ -1,5 +1,5 @@
-import * as E from 'fp-ts/Either';
 import * as yup from 'yup';
+import { jsonTo } from './../lib/schema';
 import type { Auth } from '../api/@types';
 
 export const authSchema = yup.object({
@@ -8,16 +8,4 @@ export const authSchema = yup.object({
   token: yup.string().required(),
 });
 
-export function jsonToAuth(v: string): E.Either<yup.ValidationError, Auth> {
-  return E.tryCatch(
-    () => {
-      return authSchema.validateSync(v);
-    },
-    (e) => {
-      if (e instanceof yup.ValidationError) {
-        return e;
-      }
-      throw new Error('jsontoAuthで起きたヤバイエラー');
-    }
-  );
-}
+export const jsonToAuth = jsonTo<Auth>(authSchema);
