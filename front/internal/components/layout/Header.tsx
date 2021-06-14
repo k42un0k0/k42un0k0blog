@@ -1,6 +1,7 @@
 /** @jsxImportSource theme-ui */
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
+import { pagesPath } from '../../../lib/$path';
 import { useApiClientContext } from '../../context/apiClient';
 import { useMockApi } from '../../hooks/useMockApi';
 import { usePaddingToParent } from '../../hooks/usePaddingToParent';
@@ -14,9 +15,9 @@ export default function Header(): JSX.Element {
     },
   ]);
   const snackbar = useSnackbar();
-  const { apiClient, removeAuthToken } = useApiClientContext();
-  const onClickLogout = async (): Promise<void> => {
-    await apiClient.auth.sign_out.post();
+  const { apiClient, removeAuthToken, isLoggedIn } = useApiClientContext();
+  const onClickLogout = (): void => {
+    void apiClient.auth.sign_out.post();
     removeAuthToken();
     snackbar.enqueueSnackbar('Sign Out Successful');
   };
@@ -41,7 +42,13 @@ export default function Header(): JSX.Element {
           </Link>
         );
       })}
-      <button onClick={onClickLogout}>ログアウト</button>
+      {isLoggedIn() ? (
+        <button onClick={onClickLogout}>ログアウト</button>
+      ) : (
+        <Link href={pagesPath.auth.sign_in.$url({ query: {} })}>
+          <a>ログイン</a>
+        </Link>
+      )}
     </header>
   );
 }

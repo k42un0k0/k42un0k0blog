@@ -9,6 +9,7 @@ import { pagesPath } from '../../../lib/$path';
 import { HeadKatex } from '../../components/layout';
 import { createStyles } from '../../components/styles/utils';
 import { useApiClient } from '../../context/apiClient';
+import { AuthGuardHoC } from '../../hoc/AuthGuard';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
 import { schema } from '../constants/schema';
@@ -19,7 +20,7 @@ const styles = createStyles({
 });
 
 type FormValues = { title: string; blog_type: BlogType; body: string; publish: boolean };
-export default function BlogsNew(): JSX.Element {
+export default AuthGuardHoC(function BlogsNew(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
   const mutation = useMutation(
@@ -38,18 +39,11 @@ export default function BlogsNew(): JSX.Element {
       },
     }
   );
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormValues>({ resolver: yupResolver(schema) });
-  console.log(errors);
+  const { register, handleSubmit, control } = useForm<FormValues>({ resolver: yupResolver(schema) });
   return (
     <form
       sx={styles.container}
       onSubmit={handleSubmit((data) => {
-        console.log(data);
         mutation.mutate(data);
       })}
     >
@@ -72,4 +66,4 @@ export default function BlogsNew(): JSX.Element {
       <Controller name="body" control={control} render={({ field }): ReactElement => <BlogEditor {...field} />} />
     </form>
   );
-}
+});

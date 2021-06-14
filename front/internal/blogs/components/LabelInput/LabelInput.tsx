@@ -30,7 +30,6 @@ export default function LabelInput({ name, onChange, ...props }: Props): JSX.Ele
     setValue(e.target.value);
     onChange(e);
   };
-  console.log(props);
   return (
     <div sx={styles.container} className={value ? 'has-value' : ''}>
       <Label htmlFor={name}>タイトル</Label>

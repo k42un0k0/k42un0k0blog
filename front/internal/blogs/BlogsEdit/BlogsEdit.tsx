@@ -42,21 +42,14 @@ export default function BlogsEdit(): JSX.Element {
       },
     }
   );
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<{ title: string; blog_type: number; body: string }>({
+  const { register, handleSubmit, control } = useForm<{ title: string; blog_type: number; body: string }>({
     resolver: yupResolver(schema),
     defaultValues: query.data,
   });
-  console.log(errors);
   return (
     <form
       sx={styles.container}
       onSubmit={handleSubmit((data) => {
-        console.log(data);
         mutation.mutate(data);
       })}
     >

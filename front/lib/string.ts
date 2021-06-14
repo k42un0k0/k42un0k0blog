@@ -13,3 +13,11 @@ export function filterIntAndFloat(value: string): number {
     return NaN;
   }
 }
+
+export function isEmpty(v: string): boolean {
+  return v === '';
+}
+
+export function isNotEmpty(v: string): boolean {
+  return !isEmpty(v);
+}

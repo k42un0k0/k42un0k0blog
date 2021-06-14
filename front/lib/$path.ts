@@ -1,5 +1,8 @@
 /* eslint-disable */
 // prettier-ignore
+import { Query as Query0 } from '../pages/auth/sign_in'
+
+// prettier-ignore
 export const pagesPath = {
   auth: {
     confirm: {
@@ -9,7 +12,7 @@ export const pagesPath = {
       $url: (url?: { hash?: string }) => ({ pathname: '/auth/register' as const, hash: url?.hash })
     },
     sign_in: {
-      $url: (url?: { hash?: string }) => ({ pathname: '/auth/sign_in' as const, hash: url?.hash })
+      $url: (url: { query: Query0, hash?: string }) => ({ pathname: '/auth/sign_in' as const, query: url.query, hash: url.hash })
     }
   },
   blogs: {
