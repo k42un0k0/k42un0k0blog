@@ -38,7 +38,7 @@ func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(http.StatusOK, b)
+		c.JSON(http.StatusOK, blogToResponse(b))
 	}
 }
 
