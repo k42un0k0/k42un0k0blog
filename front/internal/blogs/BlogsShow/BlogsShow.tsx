@@ -1,26 +1,32 @@
 import 'easymde/dist/easymde.min.css';
-import { useState } from 'react';
+import { useAspidaQuery } from '@aspida/react-query';
+import { useRouter } from 'next/router';
+import * as yup from 'yup';
 import { md } from '../../../lib/md';
+import { useApiClient } from '../../context/apiClient';
 import { useHighlight } from '../../hooks/useHighlight';
-
 export default function BlogsShow(): JSX.Element {
-  const [markdown] = useState(`
-  # hello
-  im markdown text
-  \`\`\`ts
-  + const a = 1;
-  const a = 1;
-  \`\`\`
-  <button>click</button>
-  `);
+  const router = useRouter();
+  const apiClient = useApiClient();
+  const id = router.query.id;
 
-  const ref = useHighlight([markdown]);
+  if (id == null || !yup.number().isValidSync(id)) {
+    return <div>not valid</div>;
+  }
+  const { data } = useAspidaQuery(apiClient.blogs._id(id), {});
+
+  const ref = useHighlight([data]);
+  console.log(data);
+  if (data?.body == null) {
+    return <div>now loading..</div>;
+  }
   return (
     <div>
+      <div>{data.title}</div>
       <span
         ref={ref}
         dangerouslySetInnerHTML={{
-          __html: md.render(markdown),
+          __html: md.render(data.body),
         }}
       />
     </div>
