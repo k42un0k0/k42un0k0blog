@@ -17,11 +17,11 @@ import type { ContextValue } from './context';
  */
 export function useApiClientValue(): ContextValue {
   const [value, setValue, remove] = useLocalStorage(LocalStorageKey.apiClient, '');
-  // Contextに入れる値の生成
   const [client, setClient] = useState(planeApiClient);
-  function setAuthResponse(res: Auth): void {
-    setValue(JSON.stringify(res));
-    setClient(createApiClientWithAuth(res.token));
+
+  function setClientFronAuth(auth: Auth): void {
+    setValue(JSON.stringify(auth));
+    setClient(createApiClientWithAuth(auth.token));
   }
   function removeAuthToken(): void {
     remove();
@@ -32,13 +32,12 @@ export function useApiClientValue(): ContextValue {
     return !(value == null || value == '');
   }
 
-  // 描画時にlocalstorageを読み取り、expireのチェックとclientの再設定をする
   useEffect(() => {
     pipe(
       value,
       validateToken,
       map((a) => {
-        setClient(createApiClientWithAuth(a.token));
+        setClientFronAuth(a);
       }),
       mapLeft((e) => {
         if (e instanceof NullError) {
@@ -52,12 +51,12 @@ export function useApiClientValue(): ContextValue {
             config: { headers: { Authorization: 'Bearer ' + e.ExpiredToken } },
           })
           .then((refreshRes) => {
-            setAuthResponse(refreshRes);
+            setClientFronAuth(refreshRes);
           });
       })
     );
   }, [value]);
-  return { apiClient: client, setAuthResponse, removeAuthToken, isLoggedIn };
+  return { apiClient: client, setAuthResponse: setClientFronAuth, removeAuthToken, isLoggedIn };
 }
 
 /**
