@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 import { useState } from 'react';
 import { Label, Input } from 'theme-ui';
-import { createStyles } from '../../../../lib/components/styles/utils';
+import { createStyles } from '../../../../lib/styles/utils';
 import type { ChangeEvent, ChangeEventHandler } from 'react';
 
 const styles = createStyles({

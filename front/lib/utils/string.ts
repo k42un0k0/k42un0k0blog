@@ -1,3 +1,6 @@
+import { parseISO, format } from 'date-fns/fp';
+import { flow } from 'fp-ts/lib/function';
+
 export function filterInt(value: string): number {
   if (/^[-+]?(\d+|Infinity)$/.test(value)) {
     return Number(value);
@@ -21,3 +24,5 @@ export function isEmpty(v: string): boolean {
 export function isNotEmpty(v: string): boolean {
   return !isEmpty(v);
 }
+
+export const formatFromISO = (f: string): ((date: string) => string) => flow(parseISO, format(f));

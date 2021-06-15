@@ -1,6 +1,6 @@
 import * as O from 'fp-ts/Option';
 import * as s from 'fp-ts/string';
-import { pick } from './fp';
+import { pick } from './struct';
 
 describe('pick', () => {
   it('pick from obj by key', () => {

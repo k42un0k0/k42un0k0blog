@@ -1,7 +1,4 @@
 import 'easymde/dist/easymde.min.css';
-import { format, parseISO } from 'date-fns/fp';
-import { fromNullable, getOrElse, map } from 'fp-ts/Option';
-import { pipe, constant } from 'fp-ts/function';
 import { useRouter } from 'next/router';
 import { HeadKatex } from '../../../lib/components/layout';
 import { useApiClient } from '../../../lib/context/apiClient';
@@ -10,6 +7,7 @@ import { useQueryWithSlug } from '../../../lib/hooks/useQueryWithSlug';
 import { md } from '../../../lib/utils/md';
 import { isNumber } from '../../../lib/utils/number';
 import { idSchema } from '../../../lib/utils/schema';
+import { formatAt } from '../../../lib/utils/struct';
 
 export default function BlogsShow(): JSX.Element {
   const router = useRouter();
@@ -25,15 +23,7 @@ export default function BlogsShow(): JSX.Element {
   return (
     <div>
       <HeadKatex />
-      <div>
-        {pipe(
-          data.published_at,
-          fromNullable,
-          map(parseISO),
-          map(format('yyyy年MM月dd日HH時mm分ss秒')),
-          getOrElse(constant(''))
-        )}
-      </div>
+      <div>{formatAt('published_at')('yyyy年MM月dd日HH時mm分ss秒')(data)}</div>
       <div>{data.title}</div>
       <span
         ref={ref}

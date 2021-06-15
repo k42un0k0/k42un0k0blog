@@ -5,7 +5,7 @@ import { pagesPath } from '../../$path';
 import { useApiClientContext } from '../../context/apiClient';
 import { useMockApi } from '../../hooks/useMockApi';
 import { usePaddingToParent } from '../../hooks/usePaddingToParent';
-import { flex } from '../styles/utils';
+import { flex } from '../../styles/utils';
 
 export default function Header(): JSX.Element {
   const query = useMockApi([

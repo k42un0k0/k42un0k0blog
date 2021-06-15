@@ -4,8 +4,8 @@ import { useToggle } from 'react-use';
 import { useState } from 'react';
 import { Switch } from 'theme-ui';
 import { MarkdownEditor } from '../../../../lib/components/markdownEditor';
-import { createStyles, sequence } from '../../../../lib/components/styles/utils';
 import { useHighlight } from '../../../../lib/hooks/useHighlight';
+import { createStyles, sequence } from '../../../../lib/styles/utils';
 import { md } from '../../../../lib/utils/md';
 
 const childStyles = createStyles({

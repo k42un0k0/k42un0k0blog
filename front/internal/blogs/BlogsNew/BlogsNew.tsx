@@ -7,9 +7,10 @@ import { useMutation } from 'react-query';
 import { Select } from 'theme-ui';
 import { pagesPath } from '../../../lib/$path';
 import { HeadKatex } from '../../../lib/components/layout';
-import { createStyles } from '../../../lib/components/styles/utils';
 import { useApiClient } from '../../../lib/context/apiClient';
 import { AuthGuardHoC } from '../../../lib/hoc/AuthGuard';
+import { createStyles } from '../../../lib/styles/utils';
+import { updateAt } from '../../../lib/utils/struct';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
 import { schema } from '../constants/schema';
@@ -23,22 +24,16 @@ type FormValues = { title: string; blog_type: BlogType; body: string; publish: b
 export default AuthGuardHoC(function BlogsNew(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
-  const mutation = useMutation(
-    async (data: FormValues) => {
-      const { publish, ...values } = data;
-      const body: BlogCreateRequestBody = {
-        ...values,
-        published_at: publish ? format(new Date(), "yyyy-MM-dd'T'HH:mm:ssxxx") : undefined,
-      };
-      await apiClient.blogs.post({ body });
-      await router.push(pagesPath.blogs.$url());
-    },
-    {
-      onSuccess: () => {
-        void 0;
-      },
-    }
-  );
+  const mutation = useMutation(async (data: FormValues) => {
+    const { publish, ...values } = data;
+    const body = updateAt(
+      'published_at',
+      publish ? format(new Date(), "yyyy-MM-dd'T'HH:mm:ssxxx") : undefined
+    )<BlogCreateRequestBody>(values);
+
+    await apiClient.blogs.post({ body });
+    await router.push(pagesPath.blogs.$url());
+  });
   const { register, handleSubmit, control } = useForm<FormValues>({ resolver: yupResolver(schema) });
   return (
     <form

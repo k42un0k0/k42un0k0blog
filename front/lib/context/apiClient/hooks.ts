@@ -35,7 +35,8 @@ export function useApiClientValue(): ContextValue {
   // 描画時にlocalstorageを読み取り、expireのチェックとclientの再設定をする
   useEffect(() => {
     pipe(
-      validateToken(value),
+      value,
+      validateToken,
       map((a) => {
         setClient(createApiClientWithAuth(a.token));
       }),
