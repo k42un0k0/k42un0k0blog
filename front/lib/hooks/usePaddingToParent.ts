@@ -1,8 +1,8 @@
 import * as O from 'fp-ts/Option';
 import * as f from 'fp-ts/function';
 import { useEffect, useRef } from 'react';
-import { pick } from '../../lib/fp';
-import { parentElement } from '../../lib/htmlElement';
+import { pick } from '../../lib/utils/fp';
+import { parentElement } from '../../lib/utils/htmlElement';
 import type { RefObject } from 'react';
 
 export function usePaddingToParent<E extends HTMLElement>(): RefObject<E> {

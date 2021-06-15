@@ -3,10 +3,10 @@ import { useBreakpointIndex } from '@theme-ui/match-media';
 import { useToggle } from 'react-use';
 import { useState } from 'react';
 import { Switch } from 'theme-ui';
-import { md } from '../../../../lib/md';
-import { MarkdownEditor } from '../../../components/markdownEditor';
-import { createStyles, sequence } from '../../../components/styles/utils';
-import { useHighlight } from '../../../hooks/useHighlight';
+import { MarkdownEditor } from '../../../../lib/components/markdownEditor';
+import { createStyles, sequence } from '../../../../lib/components/styles/utils';
+import { useHighlight } from '../../../../lib/hooks/useHighlight';
+import { md } from '../../../../lib/utils/md';
 
 const childStyles = createStyles({
   base: {

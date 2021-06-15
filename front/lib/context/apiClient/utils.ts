@@ -1,8 +1,8 @@
 import { compareAsc } from 'date-fns';
 import * as E from 'fp-ts/Either';
 import { flow, constant } from 'fp-ts/function';
-import { jsonToAuth } from '../../../apiModel/auth';
-import { isNotEmpty } from '../../../lib/string';
+import { isNotEmpty } from '../../../lib/utils/string';
+import { jsonToAuth } from '../../apiModel/auth';
 import type { Auth } from '../../../api/@types';
 import type { ValidationError } from 'yup';
 

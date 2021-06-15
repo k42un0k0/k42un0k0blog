@@ -3,13 +3,13 @@ import { format, parseISO } from 'date-fns/fp';
 import { fromNullable, getOrElse, map } from 'fp-ts/Option';
 import { pipe, constant } from 'fp-ts/function';
 import { useRouter } from 'next/router';
-import { md } from '../../../lib/md';
-import { isNumber } from '../../../lib/number';
-import { idSchema } from '../../../lib/schema';
-import { HeadKatex } from '../../components/layout';
-import { useApiClient } from '../../context/apiClient';
-import { useHighlight } from '../../hooks/useHighlight';
-import { useQueryWithSlug } from '../../hooks/useQueryWithSlug';
+import { HeadKatex } from '../../../lib/components/layout';
+import { useApiClient } from '../../../lib/context/apiClient';
+import { useHighlight } from '../../../lib/hooks/useHighlight';
+import { useQueryWithSlug } from '../../../lib/hooks/useQueryWithSlug';
+import { md } from '../../../lib/utils/md';
+import { isNumber } from '../../../lib/utils/number';
+import { idSchema } from '../../../lib/utils/schema';
 
 export default function BlogsShow(): JSX.Element {
   const router = useRouter();

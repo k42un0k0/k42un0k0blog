@@ -1,6 +1,6 @@
 import * as array from 'fp-ts/Array';
 import { MonoidAny } from 'fp-ts/boolean';
-import type { BlogType } from './../api/@types/index';
+import type { BlogType } from '../../api/@types/index';
 
 export const BlogTypes: UnionToTuple<BlogType> = [0, 1, 2];
 

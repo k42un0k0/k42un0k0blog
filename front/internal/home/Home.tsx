@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
-import { Skeleton } from '../components/skeleton';
-import { sticky, createStyles, sequence, flex } from '../components/styles/utils';
-import { useMockApi } from '../hooks/useMockApi';
+import { Skeleton } from '../../lib/components/skeleton';
+import { sticky, createStyles, sequence, flex } from '../../lib/components/styles/utils';
+import { useMockApi } from '../../lib/hooks/useMockApi';
 
 const styles = createStyles({
   root: { maxWidth: 1400, margin: 'auto' },

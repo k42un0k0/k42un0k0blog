@@ -6,8 +6,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { ThemeProvider } from 'theme-ui';
 import { light } from '../constant/theme';
-import { Layout } from '../internal/components/layout';
-import { ApiClientProvider, useApiClientValue } from '../internal/context/apiClient';
+import { Layout } from '../lib/components/layout';
+import { ApiClientProvider, useApiClientValue } from '../lib/context/apiClient';
 
 type Props = {
   Component: React.VFC;

@@ -1,7 +1,7 @@
 import { fromNullable, getOrElse, map } from 'fp-ts/Option';
 import { flow, constant } from 'fp-ts/function';
 import * as yup from 'yup';
-import { isBlogType } from '../../../apiModel/blog';
+import { isBlogType } from '../../../lib/apiModel/blog';
 
 export const schema = yup.object().shape({
   title: yup.string(),
