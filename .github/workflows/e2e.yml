@@ -19,12 +19,6 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - name: Save build folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
       - uses: cypress-io/github-action@v2
         with:
           runTests: false
@@ -50,7 +44,6 @@ jobs:
           path: build
       - uses: cypress-io/github-action@v2
         with:
-          install: false
           browser: chrome
           working-directory: ./e2e
           record: true
