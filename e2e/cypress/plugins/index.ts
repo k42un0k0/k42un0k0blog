@@ -16,4 +16,16 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {};
+import cucumber from "cypress-cucumber-preprocessor";
+
+const browserify = require("@cypress/browserify-preprocessor");
+const resolve = require("resolve");
+
+module.exports = (on, config) => {
+  const options = {
+    ...browserify.defaultOptions,
+    typescript: resolve.sync("typescript", { baseDir: config.projectRoot }),
+  };
+
+  on("file:preprocessor", cucumber(options));
+};

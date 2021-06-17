@@ -4,10 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@cypress/browserify-preprocessor": "3.0.1",
     "@testing-library/cypress": "7.0.6",
     "@types/node": "15.12.2",
     "cypress": "7.5.0",
+    "cypress-cucumber-preprocessor": "4.1.2",
     "puppeteer": "10.0.0",
-    "typescript": "4.3.2"
+    "typescript": "4.3.3"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }
