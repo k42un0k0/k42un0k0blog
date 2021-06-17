@@ -1,0 +1,17 @@
+version: "2"
+services:
+  front:
+    image: node:14-stretch
+    volumes:
+      - ./front:/app
+      - ./scripts/wait-for.sh:/wait-for.sh
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    command: |
+      bash -c "
+        yarn build
+        ../wait-for.sh app:8080 -- yarn start
+      "
