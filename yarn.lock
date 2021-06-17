@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@k42un0k0/puml-to-image@0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@k42un0k0/puml-to-image/0.1.0/b34e9895aa8e7db6c4bc72ff99be1a36aa095f9988a81c2fbd92b20835eb389a#115dfee2fd1b6a3123a028d81cf4b5f95c73310f"
-  integrity sha512-HlA4PAgjJ8y8PWDt3cCpY2kRcwQwA7LdFA/S9BpixerpUQThK7Mvx2O2bFUcqV0xyHgglpe6BiLnF3XYJ4947Q==
+"@k42un0k0/puml-to-image@0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@k42un0k0/puml-to-image/0.1.2/6b630eb60a92a6d0c9cf4c14708f24ae084ac1fe83bfc68cec8d9512e4621b69#0053499595afaf0d2f3d9defe5081f00a0e96706"
+  integrity sha512-bpSxenl3SJZzEz01RUZPbpoUmkQMhiTfFZIDvuaTAeecnHJjPasaRwWO5lgl/lRvUIYFld0Gj7qUr5A4vu8jsQ==
   dependencies:
     chalk "^4.1.0"
     glob "^7.1.6"

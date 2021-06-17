@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@k42un0k0/puml-to-image": "0.1.0",
+    "@k42un0k0/puml-to-image": "0.1.2",
     "husky": "6.0.0",
     "lint-staged": "11.0.0"
   },
