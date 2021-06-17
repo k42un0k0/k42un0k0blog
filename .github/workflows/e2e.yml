@@ -19,6 +19,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+      - name: 日本語フォントのインストール
+        run: sudo apt-get install fonts-migmix
       - uses: cypress-io/github-action@v2
         with:
           browser: chrome
