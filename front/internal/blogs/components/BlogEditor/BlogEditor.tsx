@@ -4,9 +4,8 @@ import { useToggle } from 'react-use';
 import { useState } from 'react';
 import { Switch } from 'theme-ui';
 import { MarkdownEditor } from '../../../../lib/components/markdownEditor';
-import { useHighlight } from '../../../../lib/hooks/useHighlight';
+import { MarkdownViewer } from '../../../../lib/components/viewer';
 import { createStyles, sequence } from '../../../../lib/styles/utils';
-import { md } from '../../../../lib/utils/md';
 
 const childStyles = createStyles({
   base: {
@@ -15,9 +14,9 @@ const childStyles = createStyles({
     flex: '0 0 auto',
     boxSizing: 'border-box',
     transition: 'transform .5s',
-    '&.preview': {
-      transform: 'translate(-100%,0)',
-    },
+  },
+  preview: {
+    transform: 'translate(-100%,0)',
   },
   spread: sequence([
     null,
@@ -38,13 +37,26 @@ const styles = createStyles({
   },
   editor: {
     ...childStyles.base,
+    '&.preview': childStyles.preview,
     '&.spread': {
       ...childStyles.spread,
       paddingRight: [null, null, 20],
     },
   },
-  preview: {
+  markdowneditor: {
+    height: '100%',
+    '.EasyMDEContainer': {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    '.CodeMirror': {
+      height: '100%',
+    },
+  },
+  view: {
     ...childStyles.base,
+    '&.preview': childStyles.preview,
     '&.spread': {
       ...childStyles.spread,
       paddingLeft: [null, null, 20],
@@ -83,7 +95,20 @@ export default function BlogEditor({ onChange }: Props): JSX.Element {
     setValue(v);
     onChange(v);
   };
-  const ref = useHighlight([value]);
+
+  const onClickPreview = (): void => {
+    if (!preview) {
+      previewSpread(false);
+    }
+    previewPreview();
+  };
+
+  const onClickSpread = (): void => {
+    if (!spread) {
+      previewPreview(false);
+    }
+    previewSpread();
+  };
   return (
     <div sx={styles.container}>
       <div sx={styles.tools}>
@@ -92,58 +117,22 @@ export default function BlogEditor({ onChange }: Props): JSX.Element {
             label="プレビュー"
             disabled={disablePreview}
             sx={styles.tools_switch}
-            onClick={(): void => {
-              if (!preview) {
-                previewSpread(false);
-              }
-              previewPreview();
-            }}
+            onClick={onClickPreview}
             defaultChecked={preview}
           />
         </div>
         {showmihiraki && (
           <div sx={styles.tools_tool}>
-            <Switch
-              label="見開き"
-              sx={styles.tools_switch}
-              onClick={(): void => {
-                if (!spread) {
-                  previewPreview(false);
-                }
-                previewSpread();
-              }}
-              defaultChecked={spread}
-            />
+            <Switch label="見開き" sx={styles.tools_switch} onClick={onClickSpread} defaultChecked={spread} />
           </div>
         )}
       </div>
       <div sx={styles.content}>
         <div sx={styles.editor} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
-          <MarkdownEditor
-            sx={{
-              height: '100%',
-              '.EasyMDEContainer': {
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-              },
-              '.CodeMirror': {
-                height: '100%',
-              },
-            }}
-            onChange={handleChange}
-          />
+          <MarkdownEditor sx={styles.markdowneditor} onChange={handleChange} />
         </div>
-        <div sx={styles.preview} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
-          <div>
-            <span
-              ref={ref}
-              data-line-numbers={true}
-              dangerouslySetInnerHTML={{
-                __html: md.render(value),
-              }}
-            />
-          </div>
+        <div sx={styles.view} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
+          <MarkdownViewer value={value} />
         </div>
       </div>
     </div>

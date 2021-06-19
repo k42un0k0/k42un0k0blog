@@ -6,6 +6,11 @@
 import { useRef, useState, useEffect } from 'react';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
+import * as yup from 'yup';
+
+const postSchema = yup.object({
+  value: yup.string().nullable(),
+});
 
 export default function Preview(): JSX.Element {
   const deck = useRef<any>(null);
@@ -16,11 +21,12 @@ export default function Preview(): JSX.Element {
       'message',
       (event) => {
         if (event.origin !== 'http://localhost:3000') return;
-        if (typeof event.data === 'string') {
-          setValue(event.data);
+        const data = postSchema.validateSync(event.data);
+        if (data.value != null) {
+          setValue(data.value);
         } else {
           //@ts-expect-error postmessageは関数です
-          event.source?.postMessage({ isReady: true }, event.origin);
+          event.source?.postMessage({ connected: true }, event.origin);
         }
       },
       false
