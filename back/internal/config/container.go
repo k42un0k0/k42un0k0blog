@@ -1,8 +1,7 @@
-package internal
+package config
 
 import (
 	"k42un0k0blog/internal/controller"
-	"k42un0k0blog/internal/infra"
 	"k42un0k0blog/internal/infra/repository_impl"
 	"k42un0k0blog/internal/service"
 	"k42un0k0blog/pkg/model"
@@ -20,9 +19,9 @@ type Container struct {
 	service.AuthenticatorService
 }
 
-func InitContainer() Container {
+func InitContainer(db *gorm.DB) Container {
 	c := Container{}
-	c.DB = infra.InitDB()
+	c.DB = db
 	c.BlogRepository = repository_impl.InitBlogRepository(c.DB)
 	c.UserRepository = repository_impl.InitUserRepository(c.DB)
 	c.HomeController = controller.InitHomeController(c.BlogRepository)

@@ -1,4 +1,4 @@
-package internal
+package config
 
 import (
 	"time"
@@ -8,7 +8,8 @@ import (
 )
 
 func ConfigServer() *gin.Engine {
-	c := InitContainer()
+	db := InitDB()
+	c := InitContainer(db)
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(cors.New(cors.Config{

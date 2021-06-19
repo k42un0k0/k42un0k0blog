@@ -1,10 +1,10 @@
 package main
 
 import (
-	"k42un0k0blog/internal"
+	"k42un0k0blog/internal/config"
 )
 
 func main() {
-	r := internal.ConfigServer()
+	r := config.ConfigServer()
 	r.Run()
 }
