@@ -1,3 +1,3 @@
-import { Home } from '../internal/home';
+import { Preview } from '../internal/preview';
 
-export default Home;
+export default Preview;

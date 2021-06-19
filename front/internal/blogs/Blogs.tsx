@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
 import { useApiClient } from '../../lib/context/apiClient';
 
-function Blogs(): JSX.Element {
+export default function Blogs(): JSX.Element {
   const apiClient = useApiClient();
   const { data } = useAspidaQuery(apiClient.blogs, {});
   return (
@@ -17,5 +17,3 @@ function Blogs(): JSX.Element {
     </div>
   );
 }
-
-export default Blogs;
