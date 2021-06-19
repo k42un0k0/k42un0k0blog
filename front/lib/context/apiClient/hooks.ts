@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/function';
 import { useLocalStorage } from 'react-use';
 import { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
-import { LocalStorageKey } from '../../../constant/localstorage';
+import { LocalStorageKey } from '../../constant/localstorage';
 import { createApiClient, createApiClientWithAuth, planeApiClient } from './client';
 import { ApiClientContext } from './context';
 import { NullError, validateToken } from './utils';

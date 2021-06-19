@@ -5,8 +5,8 @@ import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { ThemeProvider } from 'theme-ui';
-import { light } from '../constant/theme';
 import { Layout } from '../lib/components/layout';
+import { light } from '../lib/constant/theme';
 import { ApiClientProvider, useApiClientValue } from '../lib/context/apiClient';
 
 type Props = {
