@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { pagesPath } from '../../../lib/$path';
+import { withLayout } from '../../../lib/components/layout';
 import { useApiClientContext } from '../../../lib/context/apiClient';
 import type { FormEvent } from 'react';
 
-export default function SignIn(): JSX.Element {
+export default withLayout(function SignIn(): JSX.Element {
   const { apiClient, setAuthResponse } = useApiClientContext();
   const router = useRouter();
   const redirectTo = yup.string().validateSync(router.query.redirect_to);
@@ -21,4 +22,4 @@ export default function SignIn(): JSX.Element {
       </form>
     </div>
   );
-}
+});

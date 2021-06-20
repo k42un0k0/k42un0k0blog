@@ -5,7 +5,6 @@ import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import { ThemeProvider } from 'theme-ui';
-import { Layout } from '../lib/components/layout';
 import { light } from '../lib/constant/theme';
 import { ApiClientProvider, useApiClientValue } from '../lib/context/apiClient';
 
@@ -23,9 +22,7 @@ function MyApp({ Component, pageProps }: Props): JSX.Element {
       <SnackbarProvider maxSnack={3}>
         <ApiClientProvider value={apiClientValue}>
           <QueryClientProvider client={queryClient}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </QueryClientProvider>
         </ApiClientProvider>
       </SnackbarProvider>

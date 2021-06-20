@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
+import { withLayout } from '../../lib/components/layout';
 import { Skeleton } from '../../lib/components/skeleton';
 import { useMockApi } from '../../lib/hooks/useMockApi';
 import { sticky, createStyles, sequence, flex } from '../../lib/styles/utils';
@@ -62,7 +63,7 @@ const styles = createStyles({
   head: { textTransform: 'capitalize' },
 });
 
-function Home(): JSX.Element {
+export default withLayout(function Home(): JSX.Element {
   const recents = useMockApi({
     latest: { title: 'title', body: 'body' },
     list: [{ title: 'title', body: 'body' }],
@@ -151,6 +152,4 @@ function Home(): JSX.Element {
       </div>
     </main>
   );
-}
-
-export default Home;
+});

@@ -5,11 +5,12 @@
 
 import { useRef, useState, useEffect } from 'react';
 import 'reveal.js/dist/reveal.css';
-import 'reveal.js/dist/theme/black.css';
+import 'reveal.js/dist/theme/moon.css';
 import * as yup from 'yup';
 
 const postSchema = yup.object({
   value: yup.string().nullable(),
+  print: yup.bool(),
 });
 
 export default function Preview(): JSX.Element {
@@ -22,6 +23,9 @@ export default function Preview(): JSX.Element {
       (event) => {
         if (event.origin !== 'http://localhost:3000') return;
         const data = postSchema.validateSync(event.data);
+        if (data.print == true) {
+          window.print();
+        }
         if (data.value != null) {
           setValue(data.value);
         } else {
@@ -36,6 +40,7 @@ export default function Preview(): JSX.Element {
   useEffect(() => {
     if (value === '') return;
     if (process.browser && typeof window !== 'undefined') {
+      document.documentElement.classList.add('print-pdf');
       const { default: Reveal } = require('reveal.js');
       const HighLight = require('reveal.js/plugin/highlight/highlight.js');
       const Markdown = require('reveal.js/plugin/markdown/markdown.js');
@@ -47,7 +52,7 @@ export default function Preview(): JSX.Element {
   }, [value]);
 
   return (
-    <main className="reveal" ref={ref}>
+    <div className="reveal reveal-viewport" ref={ref}>
       <div className="slides">
         <section data-markdown="">
           <textarea
@@ -59,6 +64,6 @@ export default function Preview(): JSX.Element {
           ></textarea>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

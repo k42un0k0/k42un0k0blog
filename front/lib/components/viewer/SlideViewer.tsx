@@ -31,7 +31,7 @@ export default function Sample({ value }: Props): JSX.Element {
     iframeRef.current?.contentWindow?.postMessage({ value }, 'http://localhost:3000');
   };
   const reloadAndCheckConnect = (): void => {
-    iframeRef.current?.setAttribute('src', 'http://localhost:3000/_preview');
+    iframeRef.current?.setAttribute('src', 'http://localhost:3000/_preview?print-pdf');
     timer.start(checkConnect);
   };
   const postValueWhenConnect = (event: any): void => {
@@ -50,5 +50,16 @@ export default function Sample({ value }: Props): JSX.Element {
     };
   }, [value]);
 
-  return <iframe ref={iframeRef} style={{ width: 500, height: 500 }}></iframe>;
+  return (
+    <div>
+      <button
+        onClick={(): void => {
+          iframeRef.current?.contentWindow?.postMessage({ value: null, print: true }, 'http://localhost:3000');
+        }}
+      >
+        押して
+      </button>
+      <iframe ref={iframeRef} style={{ width: 500, height: 500 }}></iframe>
+    </div>
+  );
 }
