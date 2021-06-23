@@ -39,3 +39,12 @@ resource "aws_subnet" "sub" {
     Name = "Sub"
   }
 }
+
+resource "aws_ecr_repository" "back_image" {
+  name                 = "k42un0k0blog_back"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
