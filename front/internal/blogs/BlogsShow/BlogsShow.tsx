@@ -28,20 +28,19 @@ export default function BlogsShow({ data }: Props): JSX.Element {
     return <div>now loading..</div>;
   }
   return (
-    <div>
+    <p>
       <HeadKatex />
-      <div>{formatAt('published_at')('yyyy年MM月dd日HH時mm分ss秒')(data)}</div>
-      <div>{data.title}</div>
-      <div sx={{ width: '80vw' }}>
-        {isAmp ? (
-          <amp-img src="/moon.jpeg" width="1200" height="675" alt="a cool image" sizes="80vw" layout="responsive" />
-        ) : (
-          <img src="/moon.jpeg" />
-        )}
-        <Image src={moon} alt="a cool image" sizes="80vw" layout="responsive" loading="lazy" />
-      </div>
+      <p>{formatAt('published_at')('yyyy年MM月dd日HH時mm分ss秒')(data)}</p>
+      <p>{data.title}</p>
+      {isAmp ? (
+        <amp-img src="/moon.jpeg" width="1200" height="675" alt="a cool image" sizes="80vw" layout="responsive" />
+      ) : (
+        <div sx={{ width: '80vw' }}>
+          <Image src={moon} alt="a cool image" sizes="80vw" layout="responsive" loading="lazy" />
+        </div>
+      )}
 
       <MarkdownViewer value={data.body} />
-    </div>
+    </p>
   );
 }
