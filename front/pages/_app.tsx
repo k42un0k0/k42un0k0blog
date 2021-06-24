@@ -20,8 +20,8 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: Props): JSX.Element {
   const apiClientValue = useApiClientValue();
   return (
-    <ThemeProvider theme={light}>
-      <CacheProvider value={cache}>
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={light}>
         <SnackbarProvider maxSnack={3}>
           <ApiClientProvider value={apiClientValue}>
             <QueryClientProvider client={queryClient}>
@@ -29,8 +29,8 @@ function MyApp({ Component, pageProps }: Props): JSX.Element {
             </QueryClientProvider>
           </ApiClientProvider>
         </SnackbarProvider>
-      </CacheProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 
