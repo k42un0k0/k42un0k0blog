@@ -5,4 +5,5 @@ export const defaultTheme = {
 
 export const light = {
   ...defaultTheme,
+  styles: { root: {} },
 };

@@ -3,22 +3,6 @@ type TupleTail<T extends [...any]> = T extends [any, ...infer U] ? U : any;
 type TupleInit<T extends [...any]> = T extends [...infer U, any] ? U : any;
 type TupleLast<T extends [...any]> = T extends [...any, infer U] ? U : any;
 
-declare module 'markdown-it-texmath' {
-  const d: any;
-  export default d;
-}
-
-declare module 'reveal.js' {
-  type Reveal = new (arg: any) => { initialize: () => void };
-  const d: Reveal;
-  export default d;
-}
-
-declare module 'reveal.js/plugin/markdown/markdown.esm.js' {
-  const d: any;
-  export default d;
-}
-
 type UnionToTuple<T> = UnionLast<T> extends never ? [] : [...UnionToTuple<UnionInit<T>>, UnionLast<T>];
 type UnionHead<T> = UnionInit<T> extends never ? UnionLast<T> : UnionHead<UnionInit<T>>;
 
