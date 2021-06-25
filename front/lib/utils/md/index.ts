@@ -44,4 +44,4 @@ function sanitize(m: MarkdownIt): void {
 sanitize(md);
 sanitize(mdAmp);
 
-export { md };
+export { md, mdAmp };

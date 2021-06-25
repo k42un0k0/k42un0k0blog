@@ -1,10 +1,11 @@
 import { useBreakpointIndex } from '@theme-ui/match-media';
-import { useToggle } from 'react-use';
+import { useToggle, useUpdateEffect } from 'react-use';
 import { useState } from 'react';
 import { Switch } from 'theme-ui';
 import { MarkdownEditor } from '../../../../lib/components/markdownEditor';
 import { MarkdownViewer } from '../../../../lib/components/viewer';
 import { createStyles, sequence } from '../../../../lib/styles/utils';
+import 'easymde/dist/easymde.min.css';
 
 const childStyles = createStyles({
   base: {
@@ -81,15 +82,19 @@ const styles = createStyles({
 });
 
 type Props = {
+  value: string;
   onChange: (v: string) => void;
 };
-export default function BlogEditor({ onChange }: Props): JSX.Element {
+export default function BlogEditor({ value: valueProp, onChange }: Props): JSX.Element {
   const [preview, previewPreview] = useToggle(false);
   const [spread, previewSpread] = useToggle(false);
   const isPC = useBreakpointIndex() >= 2;
   const disablePreview = spread && isPC;
   const showmihiraki = isPC;
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(valueProp || '');
+  useUpdateEffect(() => {
+    setValue(valueProp);
+  }, [valueProp]);
   const handleChange = (v: string): void => {
     setValue(v);
     onChange(v);
@@ -128,7 +133,7 @@ export default function BlogEditor({ onChange }: Props): JSX.Element {
       </div>
       <div sx={styles.content}>
         <div sx={styles.editor} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
-          <MarkdownEditor sx={styles.markdowneditor} onChange={handleChange} />
+          <MarkdownEditor sx={styles.markdowneditor} value={value} onChange={handleChange} />
         </div>
         <div sx={styles.view} className={(preview ? 'preview' : '') + (spread ? ' spread' : '')}>
           <MarkdownViewer value={value} />
