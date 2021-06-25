@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { useBreakpointIndex } from '@theme-ui/match-media';
 import { useToggle } from 'react-use';
 import { useState } from 'react';

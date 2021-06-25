@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';

@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';

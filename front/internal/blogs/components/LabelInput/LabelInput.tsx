@@ -1,8 +1,7 @@
-/** @jsxImportSource theme-ui */
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { Label, Input } from 'theme-ui';
 import { createStyles } from '../../../../lib/styles/utils';
-import type { ChangeEvent, ChangeEventHandler } from 'react';
+import type { ChangeEvent, ChangeEventHandler, Ref } from 'react';
 
 const styles = createStyles({
   container: {
@@ -24,7 +23,10 @@ type Props = {
   onChange: ChangeEventHandler<HTMLInputElement>;
   name: string;
 };
-export default function LabelInput({ name, onChange, ...props }: Props): JSX.Element {
+export default forwardRef(function LabelInput(
+  { name, onChange, ...props }: Props,
+  ref: Ref<HTMLInputElement>
+): JSX.Element {
   const [value, setValue] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
@@ -33,7 +35,7 @@ export default function LabelInput({ name, onChange, ...props }: Props): JSX.Ele
   return (
     <div sx={styles.container} className={value ? 'has-value' : ''}>
       <Label htmlFor={name}>タイトル</Label>
-      <Input id={name} name={name} onChange={handleChange} {...props} />
+      <Input ref={ref} id={name} name={name} onChange={handleChange} {...props} />
     </div>
   );
-}
+});

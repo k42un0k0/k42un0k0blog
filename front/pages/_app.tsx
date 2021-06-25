@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: Props): JSX.Element {
   return (
     <>
       <Head>
-        <style dangerouslySetInnerHTML={{ __html: `${css}${draculaCss}${easymde}` }} />
+        <style amp-custom={true} dangerouslySetInnerHTML={{ __html: `${css}${draculaCss}${easymde}` }} />
       </Head>
       <CacheProvider value={cache}>
         <ThemeProvider theme={light}>

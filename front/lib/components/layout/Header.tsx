@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 import { pagesPath } from '../../$path';

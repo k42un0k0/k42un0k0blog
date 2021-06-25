@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { useHighlight } from '../../hooks/useHighlight';
 import { md } from '../../utils/md';
 type Props = {

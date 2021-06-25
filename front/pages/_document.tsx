@@ -1,4 +1,3 @@
-/** @jsxImportSource react */
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { extractCritical } from '../lib/emotion';
 import type { DocumentContext, DocumentInitialProps } from 'next/document';

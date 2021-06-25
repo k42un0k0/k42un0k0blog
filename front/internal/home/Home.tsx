@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-
 import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
 import { withLayout } from '../../lib/components/layout';
