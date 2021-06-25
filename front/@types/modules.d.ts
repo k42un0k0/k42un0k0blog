@@ -3,6 +3,11 @@ declare module 'markdown-it-texmath' {
   export default d;
 }
 
+declare module 'markdown-it-table-of-contents' {
+  const d: any;
+  export default d;
+}
+
 declare module 'reveal.js' {
   type Reveal = new (arg: any) => { initialize: () => void };
   const d: Reveal;
