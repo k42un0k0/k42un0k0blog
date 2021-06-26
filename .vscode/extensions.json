@@ -6,6 +6,7 @@
     "golang.go",
     "42crunch.vscode-openapi",
     "mtxr.sqltools",
-    "stevencl.adddoccomments"
+    "stevencl.adddoccomments",
+    "4ops.terraform"
   ]
 }

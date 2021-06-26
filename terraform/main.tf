@@ -1,3 +1,13 @@
+
+terraform {
+  required_version = ">= 1.0.1"
+  backend "s3" {
+    bucket = "k42un0k0blog-terraform-state" 
+    key = "state"
+    region = "ap-northeast-1"
+  }
+}
+
 provider "aws" {
   region = "ap-northeast-1"
 }
