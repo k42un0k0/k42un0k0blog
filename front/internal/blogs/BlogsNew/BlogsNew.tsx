@@ -7,7 +7,7 @@ import { Select } from 'theme-ui';
 import { pagesPath } from '../../../lib/$path';
 import { HeadKatex } from '../../../lib/components/layout';
 import { useApiClient } from '../../../lib/context/apiClient';
-import { AuthGuardHoC } from '../../../lib/hoc/AuthGuard';
+import { withAuthGuard } from '../../../lib/hoc/withAuthGuard';
 import { createStyles } from '../../../lib/styles/utils';
 import { updateAt } from '../../../lib/utils/struct';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
@@ -20,7 +20,7 @@ const styles = createStyles({
 });
 
 type FormValues = { title: string; blog_type: BlogType; body: string; publish: boolean };
-export default AuthGuardHoC(function BlogsNew(): JSX.Element {
+export default withAuthGuard(function BlogsNew(): JSX.Element {
   const router = useRouter();
   const apiClient = useApiClient();
   const mutation = useMutation(async (data: FormValues) => {
