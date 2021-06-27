@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { useUpdateEffect } from 'react-use';
-import * as yup from 'yup';
 import { pagesPath } from '../../../lib/$path';
 import { HeadKatex, withLayout } from '../../../lib/components/layout';
 import { useApiClient } from '../../../lib/context/apiClient';
@@ -13,12 +12,8 @@ import { isNumber } from '../../../lib/utils/number';
 import { idSchema } from '../../../lib/utils/schema';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
+import { schema } from './lib/schema';
 import type { ReactElement } from 'react';
-
-export const schema = yup.object().shape({
-  title: yup.string(),
-  body: yup.string(),
-});
 
 const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
