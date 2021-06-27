@@ -12,7 +12,7 @@ import { createStyles } from '../../../lib/styles/utils';
 import { updateAt } from '../../../lib/utils/struct';
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
-import { schema } from '../constants/schema';
+import { schema } from './lib/schema';
 import type { BlogCreateRequestBody, BlogType } from '../../../api/@types';
 import type { ReactElement } from 'react';
 const styles = createStyles({
