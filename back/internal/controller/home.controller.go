@@ -17,8 +17,8 @@ func InitHomeController(blogRepository model.BlogRepository) HomeController {
 	return h
 }
 
-func (homeController HomeController) HomeGet(c *gin.Context) {
-	b, err := homeController.blogRepository.FindById(1)
+func (hc *HomeController) HomeGet(c *gin.Context) {
+	b, err := hc.blogRepository.FindById(1)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {

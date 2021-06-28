@@ -17,9 +17,9 @@ func InitUsersController(userRepository model.UserRepository) UsersController {
 	return h
 }
 
-func (usersController UsersController) UserList(c *gin.Context) {
+func (uc *UsersController) UserList(c *gin.Context) {
 	query := initWithPage(c)
-	users, err := usersController.userRepository.FindAllByPage(query.page, 20)
+	users, err := uc.userRepository.FindAllByPage(query.page, 20)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -27,9 +27,9 @@ func (usersController UsersController) UserList(c *gin.Context) {
 	}
 }
 
-func (UsersController UsersController) UserGet(c *gin.Context) {
+func (uc *UsersController) UserGet(c *gin.Context) {
 	query := initWithId(c)
-	u, err := UsersController.userRepository.FindById(uint(query.id))
+	u, err := uc.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -37,7 +37,7 @@ func (UsersController UsersController) UserGet(c *gin.Context) {
 	}
 }
 
-func (usersController UsersController) UserCreate(c *gin.Context) {
+func (uc *UsersController) UserCreate(c *gin.Context) {
 	var json UserCreateJson
 	if err := c.BindJSON(&json); err != nil {
 		return
@@ -50,7 +50,7 @@ func (usersController UsersController) UserCreate(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "invalid password"})
 		return
 	}
-	u, err := usersController.userRepository.Create(user, json.password)
+	u, err := uc.userRepository.Create(user, json.password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -58,9 +58,9 @@ func (usersController UsersController) UserCreate(c *gin.Context) {
 	}
 }
 
-func (UsersController UsersController) UserUpdate(c *gin.Context) {
+func (uc *UsersController) UserUpdate(c *gin.Context) {
 	query := initWithId(c)
-	user, err := UsersController.userRepository.FindById(uint(query.id))
+	user, err := uc.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(404, nil)
 	}
@@ -74,7 +74,7 @@ func (UsersController UsersController) UserUpdate(c *gin.Context) {
 	if json.email != nil {
 		user.Email = *json.email
 	}
-	u, err := UsersController.userRepository.Update(user)
+	u, err := uc.userRepository.Update(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -82,9 +82,9 @@ func (UsersController UsersController) UserUpdate(c *gin.Context) {
 	}
 }
 
-func (UsersController UsersController) UserUpdatePassword(c *gin.Context) {
+func (uc *UsersController) UserUpdatePassword(c *gin.Context) {
 	query := initWithId(c)
-	user, err := UsersController.userRepository.FindById(uint(query.id))
+	user, err := uc.userRepository.FindById(uint(query.id))
 	if err != nil {
 		c.JSON(404, nil)
 	}
@@ -96,7 +96,7 @@ func (UsersController UsersController) UserUpdatePassword(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "invalid password"})
 		return
 	}
-	u, err := UsersController.userRepository.UpdatePassword(user, json.password)
+	u, err := uc.userRepository.UpdatePassword(user, json.password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {

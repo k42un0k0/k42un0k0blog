@@ -23,7 +23,7 @@ func (user *UserDao) SetPassword(password string) error {
 	return nil
 }
 
-func (dao UserDao) ToModel() model.User {
+func (dao *UserDao) ToModel() model.User {
 	m := model.User{}
 	m.ID = dao.ID
 	m.Name = dao.Name

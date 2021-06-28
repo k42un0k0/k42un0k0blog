@@ -15,7 +15,7 @@ type BlogDao struct {
 	PublishedAt *time.Time
 }
 
-func (dao BlogDao) ToModel() model.Blog {
+func (dao *BlogDao) ToModel() model.Blog {
 	m := model.Blog{}
 	m.ID = dao.ID
 	m.Title = dao.Title

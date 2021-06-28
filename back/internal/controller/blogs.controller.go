@@ -18,9 +18,9 @@ func InitBlogsController(blogRepository model.BlogRepository) BlogsController {
 	return h
 }
 
-func (BlogsController BlogsController) BlogList(c *gin.Context) {
+func (bc *BlogsController) BlogList(c *gin.Context) {
 	query := initWithPage(c)
-	blogs, err := BlogsController.blogRepository.FindAllByPage(query.page, 20)
+	blogs, err := bc.blogRepository.FindAllByPage(query.page, 20)
 	var res []blogResponse
 	for _, item := range blogs {
 		res = append(res, blogToResponse(item))
@@ -32,9 +32,9 @@ func (BlogsController BlogsController) BlogList(c *gin.Context) {
 	}
 }
 
-func (BlogsController BlogsController) BlogGet(c *gin.Context) {
+func (bc *BlogsController) BlogGet(c *gin.Context) {
 	query := initWithId(c)
-	b, err := BlogsController.blogRepository.FindById(query.id)
+	b, err := bc.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -42,7 +42,7 @@ func (BlogsController BlogsController) BlogGet(c *gin.Context) {
 	}
 }
 
-func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
+func (bc *BlogsController) BlogCreate(c *gin.Context) {
 	var json blogCreateJson
 	if e := c.BindJSON(&json); e != nil {
 		return
@@ -53,7 +53,7 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 		BlogType:    json.BlogType,
 		PublishedAt: json.PublishedAt,
 	}
-	b, err := BlogsController.blogRepository.Create(blog)
+	b, err := bc.blogRepository.Create(blog)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 	} else {
@@ -61,9 +61,9 @@ func (BlogsController BlogsController) BlogCreate(c *gin.Context) {
 	}
 }
 
-func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
+func (bc *BlogsController) BlogUpdate(c *gin.Context) {
 	query := initWithId(c)
-	blog, err := BlogsController.blogRepository.FindById(query.id)
+	blog, err := bc.blogRepository.FindById(query.id)
 	if err != nil {
 		c.JSON(404, nil)
 	}
@@ -79,7 +79,7 @@ func (BlogsController BlogsController) BlogUpdate(c *gin.Context) {
 	}
 	blog.PublishedAt = json.PublishedAt
 
-	b, err := BlogsController.blogRepository.Update(blog)
+	b, err := bc.blogRepository.Update(blog)
 	log.Print(b, blog)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
