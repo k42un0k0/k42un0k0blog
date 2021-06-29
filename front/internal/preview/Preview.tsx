@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
+import { useUpdateEffect } from 'react-use';
 import { useRef, useState, useEffect } from 'react';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/moon.css';
@@ -37,17 +38,18 @@ export default function Preview(): JSX.Element {
     );
   }, []);
 
-  useEffect(() => {
-    if (value === '') return;
+  useUpdateEffect(() => {
     if (process.browser && typeof window !== 'undefined') {
-      document.documentElement.classList.add('print-pdf');
-      const { default: Reveal } = require('reveal.js');
-      const HighLight = require('reveal.js/plugin/highlight/highlight.js');
-      const Markdown = require('reveal.js/plugin/markdown/markdown.js');
-      deck.current = new Reveal({
-        plugins: [Markdown, HighLight],
-      });
-      deck.current.initialize();
+      void (async (): Promise<void> => {
+        document.documentElement.classList.add('print-pdf');
+        const reveal = await import('reveal.js');
+        const HighLight = await import('reveal.js/plugin/highlight/highlight.js');
+        const Markdown = await import('reveal.js/plugin/markdown/markdown.js');
+        deck.current = new reveal.default({
+          plugins: [Markdown, HighLight],
+        });
+        deck.current.initialize();
+      })();
     }
   }, [value]);
 

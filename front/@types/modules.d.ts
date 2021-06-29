@@ -14,7 +14,12 @@ declare module 'reveal.js' {
   export default d;
 }
 
-declare module 'reveal.js/plugin/markdown/markdown.esm.js' {
+declare module 'reveal.js/plugin/markdown/markdown.js' {
+  const d: any;
+  export default d;
+}
+
+declare module 'reveal.js/plugin/highlight/highlight.js' {
   const d: any;
   export default d;
 }

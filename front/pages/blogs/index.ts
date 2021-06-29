@@ -1,3 +1,4 @@
 import { Blogs } from '../../internal/blogs';
+import { withApiProvider } from '../../lib/hoc/withApiProvider';
 
-export default Blogs;
+export default withApiProvider(Blogs);

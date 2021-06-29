@@ -1,4 +1,4 @@
-import { parseISO, format } from 'date-fns/fp';
+import dayjs from 'dayjs';
 import { flow } from 'fp-ts/lib/function';
 
 export function filterInt(value: string): number {
@@ -25,4 +25,4 @@ export function isNotEmpty(v: string): boolean {
   return !isEmpty(v);
 }
 
-export const formatFromISO = (f: string): ((date: string) => string) => flow(parseISO, format(f));
+export const formatFromISO = (f: string): ((date: string) => string) => flow(dayjs, () => f);

@@ -1,9 +1,10 @@
 import { useAspidaQuery } from '@aspida/react-query';
 import Link from 'next/link';
 import { pagesPath } from '../../lib/$path';
+import { withLayout } from '../../lib/components/layout';
 import { useApiClient } from '../../lib/context/apiClient';
 
-export default function Blogs(): JSX.Element {
+export default withLayout(function Blogs(): JSX.Element {
   const apiClient = useApiClient();
   const { data } = useAspidaQuery(apiClient.blogs, {});
   return (
@@ -16,4 +17,4 @@ export default function Blogs(): JSX.Element {
       })}
     </div>
   );
-}
+});

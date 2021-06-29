@@ -2,11 +2,12 @@ import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 import { pagesPath } from '../../$path';
 import { useApiClientContext } from '../../context/apiClient';
+import { withSnackbarProvider } from '../../hoc/withSnackbarProvider';
 import { useMockApi } from '../../hooks/useMockApi';
 import { usePaddingToParent } from '../../hooks/usePaddingToParent';
 import { flex } from '../../styles/utils';
 
-export default function Header(): JSX.Element {
+export default withSnackbarProvider(function Header(): JSX.Element {
   const query = useMockApi([
     {
       title: 'React',
@@ -50,4 +51,4 @@ export default function Header(): JSX.Element {
       )}
     </header>
   );
-}
+});

@@ -2,13 +2,13 @@
   "conventionalCommits.scopes": ["doc", "back", "front"],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    // "source.fixAll.eslint": true // ESLint を実行
+    "source.fixAll.eslint": true 
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

@@ -1,4 +1,4 @@
-import { compareAsc } from 'date-fns';
+import dayjs from 'dayjs';
 import * as E from 'fp-ts/Either';
 import { flow, constant } from 'fp-ts/function';
 import { isNotEmpty } from '../../../lib/utils/string';
@@ -29,7 +29,7 @@ export const validateToken: (v: string | undefined) => E.Either<ValidateTokenErr
   E.filterOrElse(isNotEmpty, constant(new NullError())),
   E.chainW(jsonToAuth),
   E.filterOrElseW(
-    (a) => compareAsc(new Date(a.expire), Date.now()) < 0,
+    (a) => dayjs(a.expire).isAfter(dayjs()),
     (a) => new ExpiredError(a.token)
   )
 );

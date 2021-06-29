@@ -1,11 +1,13 @@
 import { useBreakpointIndex } from '@theme-ui/match-media';
+import dynamic from 'next/dynamic';
 import { useToggle, useUpdateEffect } from 'react-use';
 import { useState } from 'react';
 import { Switch } from 'theme-ui';
 import { MarkdownEditor } from '../../../../lib/components/markdownEditor';
-import { MarkdownViewer } from '../../../../lib/components/viewer';
 import { createStyles, sequence } from '../../../../lib/styles/utils';
 import 'easymde/dist/easymde.min.css';
+
+const MarkdownViewer = dynamic(async () => import('../../../../lib/components/viewer/MarkdownViewer'));
 
 const childStyles = createStyles({
   base: {

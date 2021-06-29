@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -27,7 +26,7 @@ export default withAuthGuard(function BlogsNew(): JSX.Element {
     const { publish, ...values } = data;
     const body = updateAt(
       'published_at',
-      publish ? format(new Date(), "yyyy-MM-dd'T'HH:mm:ssxxx") : undefined
+      publish ? new Date().toISOString() : undefined
     )<BlogCreateRequestBody>(values);
 
     await apiClient.blogs.post({ body });

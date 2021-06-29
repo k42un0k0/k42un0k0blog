@@ -3,7 +3,7 @@ import { pagesPath } from '../$path';
 import { useIsLoggedIn } from '../context/apiClient';
 
 export function withAuthGuard(Component: React.VFC): React.VFC {
-  return function AuthGuard(): JSX.Element {
+  return function WithAuthGuard(): JSX.Element {
     const router = useRouter();
     const isLoggedIn = useIsLoggedIn();
     if (!isLoggedIn()) {

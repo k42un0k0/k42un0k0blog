@@ -1,8 +1,8 @@
 import { useAmp } from 'next/amp';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { HeadKatex } from '../../../lib/components/layout';
-import { MarkdownViewer } from '../../../lib/components/viewer';
 import { useApiClient } from '../../../lib/context/apiClient';
 import { useQueryWithSlug } from '../../../lib/hooks/useQueryWithSlug';
 import { isNumber } from '../../../lib/utils/number';
@@ -10,6 +10,8 @@ import { idSchema } from '../../../lib/utils/schema';
 import { formatAt } from '../../../lib/utils/struct';
 import moon from '../../../public/moon.jpeg';
 import type { BlogResponse } from '../../../api/@types';
+
+const MarkdownViewer = dynamic(async () => import('../../../lib/components/viewer/MarkdownViewer'));
 type Props = {
   data: BlogResponse | undefined;
 };
