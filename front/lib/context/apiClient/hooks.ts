@@ -18,7 +18,6 @@ import type { ContextValue } from './context';
 export function useApiClientValue(): ContextValue {
   const [value, setValue, remove] = useLocalStorage(LocalStorageKey.apiClient, '');
   const [client, setClient] = useState(planeApiClient);
-
   function setClientFronAuth(auth: Auth): void {
     setValue(JSON.stringify(auth));
     setClient(createApiClientWithAuth(auth.token));
@@ -52,6 +51,9 @@ export function useApiClientValue(): ContextValue {
           })
           .then((refreshRes) => {
             setClientFronAuth(refreshRes);
+          })
+          .catch(() => {
+            removeAuthToken();
           });
       })
     );
