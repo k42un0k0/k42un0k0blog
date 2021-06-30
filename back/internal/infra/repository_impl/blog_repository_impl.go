@@ -7,11 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type BlogRepositoryImpl struct {
+type blogRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func (br *BlogRepositoryImpl) Create(m model.Blog) (model.Blog, error) {
+func (br *blogRepositoryImpl) Create(m model.Blog) (model.Blog, error) {
 
 	d := dao.BlogDaoFromModel(m)
 	if err := br.db.Create(&d).Error; err != nil {
@@ -21,7 +21,7 @@ func (br *BlogRepositoryImpl) Create(m model.Blog) (model.Blog, error) {
 	return d.ToModel(), nil
 }
 
-func (br *BlogRepositoryImpl) Update(m model.Blog) (model.Blog, error) {
+func (br *blogRepositoryImpl) Update(m model.Blog) (model.Blog, error) {
 
 	d := dao.BlogDaoFromModel(m)
 
@@ -32,7 +32,7 @@ func (br *BlogRepositoryImpl) Update(m model.Blog) (model.Blog, error) {
 	return d.ToModel(), nil
 }
 
-func (br *BlogRepositoryImpl) FindById(id uint) (model.Blog, error) {
+func (br *blogRepositoryImpl) FindById(id uint) (model.Blog, error) {
 
 	blog := dao.BlogDao{}
 
@@ -43,12 +43,12 @@ func (br *BlogRepositoryImpl) FindById(id uint) (model.Blog, error) {
 	return blog.ToModel(), nil
 }
 
-func (br *BlogRepositoryImpl) Delete(id uint) error {
+func (br *blogRepositoryImpl) Delete(id uint) error {
 	result := br.db.Delete(&dao.BlogDao{}, id)
 	return result.Error
 }
 
-func (br *BlogRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.Blog, error) {
+func (br *blogRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.Blog, error) {
 	daos := []dao.BlogDao{}
 
 	if err := br.db.Limit(perpage).Offset(page * perpage).Find(&daos).Error; err != nil {
@@ -63,7 +63,7 @@ func (br *BlogRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.Blog
 }
 
 func InitBlogRepository(db *gorm.DB) model.BlogRepository {
-	r := &BlogRepositoryImpl{}
+	r := &blogRepositoryImpl{}
 	r.db = db
 	return r
 }

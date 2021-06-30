@@ -7,11 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserRepositoryImpl struct {
+type userRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func (uc *UserRepositoryImpl) Create(m model.User, password string) (model.User, error) {
+func (uc *userRepositoryImpl) Create(m model.User, password string) (model.User, error) {
 
 	d := dao.UserDaoFromModel(m)
 	d.SetPassword(password)
@@ -22,7 +22,7 @@ func (uc *UserRepositoryImpl) Create(m model.User, password string) (model.User,
 	return d.ToModel(), nil
 }
 
-func (uc *UserRepositoryImpl) Update(m model.User) (model.User, error) {
+func (uc *userRepositoryImpl) Update(m model.User) (model.User, error) {
 
 	d := dao.UserDaoFromModel(m)
 
@@ -33,7 +33,7 @@ func (uc *UserRepositoryImpl) Update(m model.User) (model.User, error) {
 	return d.ToModel(), nil
 }
 
-func (uc *UserRepositoryImpl) UpdatePassword(m model.User, password string) (model.User, error) {
+func (uc *userRepositoryImpl) UpdatePassword(m model.User, password string) (model.User, error) {
 
 	d := dao.UserDaoFromModel(m)
 	d.SetPassword(password)
@@ -45,7 +45,7 @@ func (uc *UserRepositoryImpl) UpdatePassword(m model.User, password string) (mod
 	return d.ToModel(), nil
 }
 
-func (uc *UserRepositoryImpl) FindById(id uint) (model.User, error) {
+func (uc *userRepositoryImpl) FindById(id uint) (model.User, error) {
 
 	User := dao.UserDao{}
 
@@ -56,7 +56,7 @@ func (uc *UserRepositoryImpl) FindById(id uint) (model.User, error) {
 	return User.ToModel(), nil
 }
 
-func (uc *UserRepositoryImpl) FindByEmail(email string) (model.User, error) {
+func (uc *userRepositoryImpl) FindByEmail(email string) (model.User, error) {
 
 	User := dao.UserDao{}
 
@@ -67,12 +67,12 @@ func (uc *UserRepositoryImpl) FindByEmail(email string) (model.User, error) {
 	return User.ToModel(), nil
 }
 
-func (uc *UserRepositoryImpl) Delete(id uint) error {
+func (uc *userRepositoryImpl) Delete(id uint) error {
 	result := uc.db.Delete(&dao.UserDao{}, id)
 	return result.Error
 }
 
-func (uc *UserRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.User, error) {
+func (uc *userRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.User, error) {
 	daos := []dao.UserDao{}
 
 	if err := uc.db.Limit(perpage).Offset(page * perpage).Find(&daos).Error; err != nil {
@@ -87,7 +87,7 @@ func (uc *UserRepositoryImpl) FindAllByPage(page int, perpage int) ([]model.User
 }
 
 func InitUserRepository(db *gorm.DB) model.UserRepository {
-	r := &UserRepositoryImpl{}
+	r := &userRepositoryImpl{}
 	r.db = db
 	return r
 }
