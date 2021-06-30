@@ -1,3 +1,3 @@
-import { BlogsNew } from '../../internal/blogs/BlogsNew';
+import { BlogsNew } from '../../pagesModules/blogs/BlogsNew';
 
 export default BlogsNew;

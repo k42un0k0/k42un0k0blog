@@ -1,7 +1,7 @@
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from 'theme-ui';
-import { light } from '../lib/constant/theme';
 import { cache } from '../lib/emotion';
+import { light } from '../lib/theme';
 type Props = {
   Component: React.VFC;
   pageProps: Record<string, unknown>;

@@ -1,6 +1,6 @@
-import { BlogsShow } from '../../../internal/blogs/BlogsShow';
-import { planeApiClient } from '../../../lib/context/apiClient/client';
-import { idSchema } from './../../../lib/utils/schema';
+import { idSchema } from '../../../lib/schema';
+import { planeApiClient } from '../../../modules/apiClient/client';
+import { BlogsShow } from '../../../pagesModules/blogs/BlogsShow';
 import type { GetServerSideProps } from 'next';
 import type { ComponentProps } from 'react';
 

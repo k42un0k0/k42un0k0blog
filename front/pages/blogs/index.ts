@@ -1,4 +1,4 @@
-import { Blogs } from '../../internal/blogs';
-import { withApiProvider } from '../../lib/hoc/withApiProvider';
+import { withApiProvider } from '../../modules/apiClient/hoc';
+import { Blogs } from '../../pagesModules/blogs';
 
 export default withApiProvider(Blogs);
