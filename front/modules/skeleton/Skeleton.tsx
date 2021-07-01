@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
 import * as O from 'fp-ts/Option';
 import { constant, pipe } from 'fp-ts/function';
-import { print } from '../../lib/render';
+import { print } from '../render/lib';
 import type { ComponentProps, ReactNode } from 'react';
 
 type Props = ComponentProps<'div'> & {
