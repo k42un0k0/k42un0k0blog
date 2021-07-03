@@ -1,6 +1,6 @@
 const { defineConfig } = require('vite');
 module.exports = {
-  stories: ['../(internal|lib)/**/*.stories.mdx', '../@(internal|lib)/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../@(modules|pagesModules)/**/*.stories.mdx', '../@(modules|pagesModules)/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   core: {
     builder: 'storybook-builder-vite',
