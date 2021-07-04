@@ -13,8 +13,8 @@ function migrate(){
 function seed(){
     for FILE in $@
     do
-        echo "exec $FILE" 
-        docker-compose exec -T db mysql -uroot -pexample k42un0k0blog_develop < $FILE
+        echo "exec $FILE"
+        docker exec -i `docker-compose ps db | awk '$0=$1' | sed '1d'` mysql -uroot -pexample k42un0k0blog_develop < $FILE 
     done
 }
 

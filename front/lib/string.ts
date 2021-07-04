@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { flow } from 'fp-ts/lib/function';
 
 export function filterInt(value: string): number {
   if (/^[-+]?(\d+|Infinity)$/.test(value)) {
@@ -25,4 +24,7 @@ export function isNotEmpty(v: string): boolean {
   return !isEmpty(v);
 }
 
-export const formatFromISO = (f: string): ((date: string) => string) => flow(dayjs, () => f);
+export const formatFromISO =
+  (f: string): ((date: string) => string) =>
+  (d): string =>
+    dayjs(d).format(f);

@@ -12,7 +12,7 @@ VALUES (
         '2021-05-22 22:49:01.532',
         NULL,
         'hello',
-        '$$c=\sqrt\pi$$',
+        '$$c=\\sqrt\\pi$$',
         0,
         NULL
     );

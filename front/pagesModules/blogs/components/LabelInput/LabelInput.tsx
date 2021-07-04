@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { Label, Input } from 'theme-ui';
 import { createStyles } from '../../../../lib/styles/lib';
 import type { ChangeEvent, ChangeEventHandler, Ref } from 'react';
@@ -20,16 +20,15 @@ const styles = createStyles({
 });
 
 type Props = {
+  value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   name: string;
 };
 export default forwardRef(function LabelInput(
-  { name, onChange, ...props }: Props,
+  { name, value, onChange, ...props }: Props,
   ref: Ref<HTMLInputElement>
 ): JSX.Element {
-  const [value, setValue] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value);
     onChange(e);
   };
   return (
