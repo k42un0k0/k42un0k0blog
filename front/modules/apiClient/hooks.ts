@@ -4,9 +4,11 @@ import { useLocalStorage } from 'react-use';
 import { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
 import { LocalStorageKey } from '../../lib/localstorage/constants';
+import { NullValueException, RequiredValidationException } from '../../lib/throwable/runtimeException';
+
 import { createApiClient, createApiClientWithAuth, planeApiClient } from './client';
 import { ApiClientContext } from './context';
-import { NullError, validateToken } from './lib';
+import { validateToken } from './lib';
 import type { Auth } from '../../api/@types';
 import type { ApiClient } from './client';
 import type { ContextValue } from './context';
@@ -16,9 +18,9 @@ import type { ContextValue } from './context';
  * @return {Object} Contextの値
  */
 export function useApiClientValue(): ContextValue {
-  const [value, setValue, remove] = useLocalStorage(LocalStorageKey.apiClient, '');
+  const [value, setValue, remove] = useLocalStorage<string>(LocalStorageKey.apiClient);
   const [client, setClient] = useState(planeApiClient);
-  function setClientFronAuth(auth: Auth): void {
+  function setClientFromAuth(auth: Auth): void {
     setValue(JSON.stringify(auth));
     setClient(createApiClientWithAuth(auth.token));
   }
@@ -28,7 +30,7 @@ export function useApiClientValue(): ContextValue {
   }
 
   function isLoggedIn(): boolean {
-    return !(value == null || value == '');
+    return yup.string().required().isValidSync(value);
   }
 
   useEffect(() => {
@@ -36,10 +38,10 @@ export function useApiClientValue(): ContextValue {
       value,
       validateToken,
       map((a) => {
-        setClientFronAuth(a);
+        setClientFromAuth(a);
       }),
       mapLeft((e) => {
-        if (e instanceof NullError) {
+        if (e instanceof NullValueException || e instanceof RequiredValidationException) {
           return;
         } else if (e instanceof yup.ValidationError) {
           console.error(e.message);
@@ -47,10 +49,10 @@ export function useApiClientValue(): ContextValue {
         }
         void planeApiClient.auth.refresh_token
           .$get({
-            config: { headers: { Authorization: 'Bearer ' + e.ExpiredToken } },
+            config: { headers: { Authorization: 'Bearer ' + e.value } },
           })
           .then((refreshRes) => {
-            setClientFronAuth(refreshRes);
+            setClientFromAuth(refreshRes);
           })
           .catch(() => {
             removeAuthToken();
@@ -58,7 +60,7 @@ export function useApiClientValue(): ContextValue {
       })
     );
   }, [value]);
-  return { apiClient: client, setAuthResponse: setClientFronAuth, removeAuthToken, isLoggedIn };
+  return { apiClient: client, setAuthResponse: setClientFromAuth, removeAuthToken, isLoggedIn };
 }
 
 /**

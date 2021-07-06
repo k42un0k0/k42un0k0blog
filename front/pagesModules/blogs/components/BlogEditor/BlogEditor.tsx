@@ -15,7 +15,6 @@ const childStyles = createStyles({
     height: '100%',
     flex: '0 0 auto',
     boxSizing: 'border-box',
-    transition: 'transform .5s',
   },
   preview: {
     transform: 'translate(-100%,0)',
@@ -24,7 +23,6 @@ const childStyles = createStyles({
     null,
     null,
     {
-      transition: '0s',
       width: '50%',
       transform: 'none',
     },
@@ -91,8 +89,7 @@ export default function BlogEditor({ value: valueProp, onChange }: Props): JSX.E
   const [preview, previewPreview] = useToggle(false);
   const [spread, previewSpread] = useToggle(false);
   const isPC = useBreakpointIndex() >= 2;
-  const disablePreview = spread && isPC;
-  const showmihiraki = isPC;
+  const showPreview = isPC;
   const [value, setValue] = useState(valueProp || '');
   useUpdateEffect(() => {
     setValue(valueProp);
@@ -119,17 +116,11 @@ export default function BlogEditor({ value: valueProp, onChange }: Props): JSX.E
     <div sx={styles.container}>
       <div sx={styles.tools}>
         <div sx={styles.tools_tool}>
-          <Switch
-            label="プレビュー"
-            disabled={disablePreview}
-            sx={styles.tools_switch}
-            onClick={onClickPreview}
-            defaultChecked={preview}
-          />
+          <Switch label="プレビュー" sx={styles.tools_switch} onChange={onClickPreview} checked={preview} />
         </div>
-        {showmihiraki && (
+        {showPreview && (
           <div sx={styles.tools_tool}>
-            <Switch label="見開き" sx={styles.tools_switch} onClick={onClickSpread} defaultChecked={spread} />
+            <Switch label="見開き" sx={styles.tools_switch} onChange={onClickSpread} checked={spread} />
           </div>
         )}
       </div>

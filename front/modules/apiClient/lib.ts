@@ -1,35 +1,28 @@
 import dayjs from 'dayjs';
 import * as E from 'fp-ts/Either';
-import { flow, constant } from 'fp-ts/function';
+import { flow } from 'fp-ts/function';
 import { jsonToAuth } from '../../lib/model/auth';
 import { isNotEmpty } from '../../lib/string';
+import {
+  ExpiredException,
+  NullValueException,
+  RequiredValidationException,
+} from './../../lib/throwable/runtimeException';
 import type { Auth } from '../../api/@types';
-import type { ValidationError } from 'yup';
+import type * as yup from 'yup';
 
-export class NullError extends Error {
-  message = 'token is null';
-}
-
-export class ExpiredError extends Error {
-  message = 'token is expired';
-
-  constructor(private readonly expiredToken: string) {
-    super();
-  }
-
-  get ExpiredToken(): string {
-    return this.expiredToken;
-  }
-}
-
-type ValidateTokenError = ExpiredError | NullError | ValidationError;
+type ValidateTokenError =
+  | ExpiredException<string>
+  | NullValueException
+  | RequiredValidationException<string>
+  | yup.ValidationError;
 
 export const validateToken: (v: string | undefined) => E.Either<ValidateTokenError, Auth> = flow(
-  E.fromNullable(new NullError()),
-  E.filterOrElse(isNotEmpty, constant(new NullError())),
+  E.fromNullable(new NullValueException('token')),
+  E.filterOrElseW(isNotEmpty, (a) => new RequiredValidationException('token', a)),
   E.chainW(jsonToAuth),
   E.filterOrElseW(
     (a) => dayjs(a.expire).isAfter(dayjs()),
-    (a) => new ExpiredError(a.token)
+    (a) => new ExpiredException('token', a.token, a.expire)
   )
 );
