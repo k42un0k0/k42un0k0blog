@@ -12,8 +12,7 @@ type UsersController struct {
 }
 
 func InitUsersController(userRepository model.UserRepository) UsersController {
-	h := UsersController{}
-	h.userRepository = userRepository
+	h := UsersController{userRepository: userRepository}
 	return h
 }
 

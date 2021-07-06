@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 function create_migration(){
     docker-compose run --rm app migrate create -ext sql -dir migrations $@

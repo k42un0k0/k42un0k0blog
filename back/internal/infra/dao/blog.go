@@ -16,23 +16,23 @@ type BlogDao struct {
 }
 
 func (dao *BlogDao) ToModel() model.Blog {
-	m := model.Blog{}
-	m.ID = dao.ID
-	m.Title = dao.Title
-	m.Body = dao.Body
-	m.BlogType = dao.BlogType
-	m.PublishedAt = dao.PublishedAt
+	m := model.Blog{
+		ID:          dao.ID,
+		Title:       dao.Title,
+		Body:        dao.Body,
+		BlogType:    dao.BlogType,
+		PublishedAt: dao.PublishedAt,
+	}
 	return m
 }
 
 func BlogDaoFromModel(m model.Blog) BlogDao {
-	d := BlogDao{}
-	gormModel := gorm.Model{}
-	gormModel.ID = m.ID
-	d.Model = &gormModel
-	d.Title = m.Title
-	d.Body = m.Body
-	d.BlogType = m.BlogType
-	d.PublishedAt = m.PublishedAt
+	d := BlogDao{
+		Model:       &gorm.Model{ID: m.ID},
+		Title:       m.Title,
+		Body:        m.Body,
+		BlogType:    m.BlogType,
+		PublishedAt: m.PublishedAt,
+	}
 	return d
 }

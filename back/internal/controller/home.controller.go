@@ -12,8 +12,7 @@ type HomeController struct {
 }
 
 func InitHomeController(blogRepository model.BlogRepository) HomeController {
-	h := HomeController{}
-	h.blogRepository = blogRepository
+	h := HomeController{blogRepository: blogRepository}
 	return h
 }
 
