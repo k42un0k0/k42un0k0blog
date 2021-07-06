@@ -7,7 +7,7 @@ import { useApiClientContext } from '../../../modules/apiClient';
 import { withLayout } from '../../../modules/layout';
 import type { FormEvent } from 'react';
 
-export default pipe(function SignIn(_props: { unko: 1 }): JSX.Element {
+export default pipe(function SignIn(_props: { unko: 1 }): RenderReturnType {
   const { apiClient, setAuthResponse } = useApiClientContext();
   const router = useRouter();
   const redirectTo = yup.string().validateSync(router.query.redirect_to);

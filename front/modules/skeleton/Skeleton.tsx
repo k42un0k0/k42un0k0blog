@@ -19,11 +19,11 @@ const wave = keyframes({
     left: '100%',
   },
 });
-export default function Skelton({ body, ...props }: Props): JSX.Element {
+export default function Skelton({ body, ...props }: Props): RenderReturnType {
   return pipe(
     body,
     O.fromNullable,
-    O.match<ReactNode, JSX.Element>(
+    O.match<ReactNode, RenderReturnType>(
       constant(
         <div
           sx={{

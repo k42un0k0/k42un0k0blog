@@ -14,7 +14,7 @@ const postSchema = yup.object({
   print: yup.bool(),
 });
 
-export default function Preview(): JSX.Element {
+export default function Preview(): RenderReturnType {
   const deck = useRef<any>(null);
   const [value, setValue] = useState('');
   const ref = useRef<HTMLDivElement>(null);

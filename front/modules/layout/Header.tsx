@@ -7,7 +7,7 @@ import { useMockApi } from '../mockapi/useMockApi';
 import { withSnackbarProvider } from '../snackbar/withSnackbarProvider';
 import { usePaddingToParent } from '../style/usePaddingToParent';
 
-export default withSnackbarProvider(function Header(): JSX.Element {
+export default withSnackbarProvider(function Header(): RenderReturnType {
   const query = useMockApi([
     {
       title: 'React',

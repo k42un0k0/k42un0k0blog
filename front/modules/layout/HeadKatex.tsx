@@ -1,6 +1,6 @@
 import { useAmp } from 'next/amp';
 import Head from 'next/head';
-export default function HeadKatex(): JSX.Element {
+export default function HeadKatex(): RenderReturnType {
   const isAmp = useAmp();
   return (
     <Head>

@@ -12,7 +12,6 @@ import { validateToken } from './lib';
 import type { Auth } from '../../api/@types';
 import type { ApiClient } from './client';
 import type { ContextValue } from './context';
-
 /**
  * ApiClientContextの初期化処理を行う
  * @return {Object} Contextの値

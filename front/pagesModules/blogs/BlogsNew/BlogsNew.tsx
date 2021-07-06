@@ -13,14 +13,13 @@ import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
 import { schema } from './lib/schema';
 import type { BlogCreateRequestBody, BlogType } from '../../../api/@types';
-import type { ReactElement } from 'react';
 const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
 });
 
 type FormValues = { title: string; blog_type: BlogType; body: string; publish: boolean };
 export default pipe(
-  function BlogsNew(): JSX.Element {
+  function BlogsNew(): RenderReturnType {
     const router = useRouter();
     const apiClient = useApiClient();
     const mutation = useMutation(async (data: FormValues) => {
@@ -47,7 +46,11 @@ export default pipe(
           <input type="submit" value="押して"></input>
         </h1>
         <input type="checkbox" {...register('publish')} />
-        <Controller name="title" control={control} render={({ field }): ReactElement => <LabelInput {...field} />} />
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }): RenderReturnType => <LabelInput {...field} />}
+        />
         <Select {...register('blog_type')}>
           {[0, 1, 3].map((i) => {
             return (
@@ -57,7 +60,7 @@ export default pipe(
             );
           })}
         </Select>
-        <Controller name="body" control={control} render={({ field }): ReactElement => <BlogEditor {...field} />} />
+        <Controller name="body" control={control} render={({ field }): RenderReturnType => <BlogEditor {...field} />} />
       </form>
     );
   },

@@ -1,3 +1,3 @@
-export default function Register(): JSX.Element {
+export default function Register(): RenderReturnType {
   return <div>register</div>;
 }

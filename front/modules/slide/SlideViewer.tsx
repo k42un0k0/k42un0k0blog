@@ -20,7 +20,7 @@ const postSchema = yup.object({
   connected: yup.bool(),
 });
 type Props = { value: string };
-export default function Sample({ value }: Props): JSX.Element {
+export default function Sample({ value }: Props): RenderReturnType {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const timer = useIntervalTimer(100);

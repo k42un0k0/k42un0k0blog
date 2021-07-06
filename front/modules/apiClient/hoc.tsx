@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import { pagesPath } from '../../lib/$path';
 import { useIsLoggedIn } from './hooks';
+import type { VFC } from 'react';
 
-export function withAuthGuard(Component: React.VFC): React.VFC {
-  return function WithAuthGuard(): JSX.Element {
+export function withAuthGuard(Component: VFC): VFC {
+  return function WithAuthGuard(): RenderReturnType {
     const router = useRouter();
     const isLoggedIn = useIsLoggedIn();
     if (!isLoggedIn()) {

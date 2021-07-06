@@ -1,3 +1,3 @@
-export default function Confirm(): JSX.Element {
+export default function Confirm(): RenderReturnType {
   return <div>confirm</div>;
 }

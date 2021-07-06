@@ -6,7 +6,7 @@ import { useApiClient } from '../../modules/apiClient';
 import { withLayout } from '../../modules/layout';
 import { BlogRow } from './components/BlogRow';
 
-export default pipe(function Blogs(): JSX.Element {
+export default pipe(function Blogs(): RenderReturnType {
   const apiClient = useApiClient();
   const { data } = useAspidaQuery(apiClient.blogs, {});
   return (

@@ -16,7 +16,7 @@ type Props = {
   data: BlogResponse | undefined;
 };
 
-export default function BlogsShow({ data }: Props): JSX.Element {
+export default function BlogsShow({ data }: Props): RenderReturnType {
   const isAmp = useAmp();
   const router = useRouter();
   const apiClient = useApiClient();

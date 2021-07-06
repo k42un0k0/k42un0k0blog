@@ -1,10 +1,11 @@
+import React from 'react';
 import { formatAt } from '../../../../lib/struct';
 import type { BlogResponse } from '../../../../api/@types';
 
-type Prop = {
+type Props = {
   item: BlogResponse;
 };
-export default function BlogRow({ item }: Prop): JSX.Element {
+export default function BlogRow({ item }: Props): RenderReturnType {
   return (
     <div>
       <h2>{item.title}</h2>

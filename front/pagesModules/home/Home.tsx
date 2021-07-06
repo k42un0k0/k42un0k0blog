@@ -62,7 +62,7 @@ const styles = createStyles({
   head: { textTransform: 'capitalize' },
 });
 
-export default withLayout(function Home(): JSX.Element {
+export default withLayout(function Home(): RenderReturnType {
   const recents = useMockApi({
     latest: { title: 'title', body: 'body' },
     list: [{ title: 'title', body: 'body' }],

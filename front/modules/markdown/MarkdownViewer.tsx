@@ -4,7 +4,7 @@ import { useMd2Html } from './useMd2Html';
 type Props = {
   value: string;
 };
-export default function BlogEditor({ value }: Props): JSX.Element {
+export default function BlogEditor({ value }: Props): RenderReturnType {
   const ref = useHighlight([value]);
   const html = useMd2Html(value);
   return (

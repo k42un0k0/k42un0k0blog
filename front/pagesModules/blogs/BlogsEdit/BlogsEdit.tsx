@@ -14,7 +14,6 @@ import { useQueryWithSlug } from '../../../modules/react-query/useQueryWithSlug'
 import BlogEditor from '../components/BlogEditor/BlogEditor';
 import { LabelInput } from '../components/LabelInput';
 import { schema } from './lib/schema';
-import type { ReactElement } from 'react';
 
 const styles = createStyles({
   container: { display: 'grid', height: '100%', gridTemplateRows: 'auto auto 1fr', padding: [10, 40, 60] },
@@ -22,7 +21,7 @@ const styles = createStyles({
 
 type FormValues = { title: string; body: string };
 export default pipe(
-  function BlogsEdit(): JSX.Element {
+  function BlogsEdit(): RenderReturnType {
     const router = useRouter();
 
     const apiClient = useApiClient();
@@ -59,11 +58,15 @@ export default pipe(
           blogs page
           <input type="submit" value="押して"></input>
         </h1>
-        <Controller name="title" control={control} render={({ field }): ReactElement => <LabelInput {...field} />} />
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }): RenderReturnType => <LabelInput {...field} />}
+        />
         <Controller
           name="body"
           control={control}
-          render={({ field: { ref: _, ...field } }): ReactElement => <BlogEditor {...field} />}
+          render={({ field: { ref: _, ...field } }): RenderReturnType => <BlogEditor {...field} />}
         />
       </form>
     );

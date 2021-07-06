@@ -12,3 +12,5 @@ type UnionLast<T> = UnionToOverloadFunction<T> extends (a: infer U) => void ? U 
 type UnionToOverloadFunction<T> = (T extends any ? (a: (b: T) => void) => void : never) extends (c: infer U) => void
   ? U
   : never;
+
+type RenderReturnType = JSX.Element | null;

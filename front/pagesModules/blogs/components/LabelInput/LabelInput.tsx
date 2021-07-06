@@ -27,7 +27,7 @@ type Props = {
 export default forwardRef(function LabelInput(
   { name, value, onChange, ...props }: Props,
   ref: Ref<HTMLInputElement>
-): JSX.Element {
+): RenderReturnType {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     onChange(e);
   };

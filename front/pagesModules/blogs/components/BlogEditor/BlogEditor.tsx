@@ -85,7 +85,7 @@ type Props = {
   value: string;
   onChange: (v: string) => void;
 };
-export default function BlogEditor({ value: valueProp, onChange }: Props): JSX.Element {
+export default function BlogEditor({ value: valueProp, onChange }: Props): RenderReturnType {
   const [preview, previewPreview] = useToggle(false);
   const [spread, previewSpread] = useToggle(false);
   const isPC = useBreakpointIndex() >= 2;

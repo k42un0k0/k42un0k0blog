@@ -6,7 +6,8 @@ const Header = dynamic(async () => import('./Header'));
 type Props = {
   children: ReactNode;
 };
-export default function Layout({ children }: Props): JSX.Element {
+
+export default function Layout({ children }: Props): RenderReturnType {
   return (
     <div sx={{ height: '100vh', boxSizing: 'border-box' }}>
       <Header />

@@ -8,7 +8,7 @@ type Props = {
   pageProps: Record<string, unknown>;
 };
 
-function MyApp({ Component, pageProps }: Props): JSX.Element {
+function MyApp({ Component, pageProps }: Props): RenderReturnType {
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={light}>
