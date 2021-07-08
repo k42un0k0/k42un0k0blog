@@ -6,7 +6,7 @@
   "scripts": {
     "export:doc": "puml-to-image",
     "prepare": "husky install",
-    "db": "./scripts/db.sh",
+    "db": "node ./scripts/db.js",
     "bootstrap": "docker-compose build & yarn --cwd front install",
     "start": "docker-compose up & yarn --cwd front dev"
   },
@@ -17,5 +17,7 @@
     "husky": "6.0.0",
     "lint-staged": "11.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "yargs": "^17.0.1"
+  }
 }
