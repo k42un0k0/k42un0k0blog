@@ -1,5 +1,6 @@
-import { map, mapLeft } from 'fp-ts/Either';
-import { pipe } from 'fp-ts/function';
+import * as Task from 'fp-ts/Task';
+import * as TaskEither from 'fp-ts/TaskEither';
+import { pipe, identity } from 'fp-ts/function';
 import { useLocalStorage } from 'react-use';
 import { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
@@ -31,33 +32,51 @@ export function useApiClientValue(): ContextValue {
   function isLoggedIn(): boolean {
     return yup.string().required().isValidSync(value);
   }
-
   useEffect(() => {
-    pipe(
+    const res = pipe(
       value,
       validateToken,
-      map((a) => {
-        setClientFromAuth(a);
+      TaskEither.fromEither,
+      TaskEither.chain((a) => {
+        return TaskEither.rightTask(async () => {
+          setClientFromAuth(a);
+          return Promise.resolve();
+        });
       }),
-      mapLeft((e) => {
+      TaskEither.getOrElse((e) => {
         if (e instanceof NullValueException || e instanceof RequiredValidationException) {
-          return;
+          return Task.of(void 0);
         } else if (e instanceof yup.ValidationError) {
           console.error(e.message);
-          return;
+          return Task.of(void 0);
         }
-        void planeApiClient.auth.refresh_token
-          .$get({
-            config: { headers: { Authorization: 'Bearer ' + e.value } },
-          })
-          .then((refreshRes) => {
-            setClientFromAuth(refreshRes);
-          })
-          .catch(() => {
-            removeAuthToken();
-          });
+        return pipe(
+          TaskEither.tryCatch(
+            async () =>
+              planeApiClient.auth.refresh_token.$get({
+                config: { headers: { Authorization: 'Bearer ' + e.value } },
+              }),
+            identity
+          ),
+          TaskEither.match(
+            () => {
+              return async (): Promise<void> => {
+                removeAuthToken();
+                return Promise.resolve();
+              };
+            },
+            (auth) => {
+              return async (): Promise<void> => {
+                setClientFromAuth(auth);
+                return Promise.resolve();
+              };
+            }
+          ),
+          Task.flatten
+        );
       })
     );
+    void res();
   }, [value]);
   return { apiClient: client, setAuthResponse: setClientFromAuth, removeAuthToken, isLoggedIn };
 }
